@@ -1,0 +1,13 @@
+#ifndef ICU_CONFIG
+#define ICU_CONFIG
+
+//EXTI Used by ICU
+#define ICU_TIMER_USED (TIMER_0)
+
+//Timer Used by ICU
+#define ICU_EXTI_USED (EXTI_INT0)
+
+//ICU Mode ICU_SNGLE_CAPTURE_MODE and ICU_CONTINOUS_MODE
+#define ICU_MODE  (ICU_SNGLE_CAPTURE_MODE)     
+
+#endif

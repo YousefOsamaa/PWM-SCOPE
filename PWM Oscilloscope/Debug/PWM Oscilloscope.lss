@@ -1,0 +1,615 @@
+
+PWM Oscilloscope.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003c6  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000043a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000003d  00800060  00800060  0000043a  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000043a  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000046c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000258  00000000  00000000  000004a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00001c65  00000000  00000000  00000700  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000b92  00000000  00000000  00002365  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000017ad  00000000  00000000  00002ef7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000006d4  00000000  00000000  000046a4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000f0a  00000000  00000000  00004d78  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000028b2  00000000  00000000  00005c82  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000248  00000000  00000000  00008534  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 4a 00 	jmp	0x94	; 0x94 <__vector_1>
+   8:	0c 94 77 00 	jmp	0xee	; 0xee <__vector_2>
+   c:	0c 94 a4 00 	jmp	0x148	; 0x148 <__vector_3>
+  10:	0c 94 90 01 	jmp	0x320	; 0x320 <__vector_4>
+  14:	0c 94 9c 01 	jmp	0x338	; 0x338 <__vector_5>
+  18:	0c 94 dc 00 	jmp	0x1b8	; 0x1b8 <__vector_6>
+  1c:	0c 94 09 01 	jmp	0x212	; 0x212 <__vector_7>
+  20:	0c 94 36 01 	jmp	0x26c	; 0x26c <__vector_8>
+  24:	0c 94 63 01 	jmp	0x2c6	; 0x2c6 <__vector_9>
+  28:	0c 94 a8 01 	jmp	0x350	; 0x350 <__vector_10>
+  2c:	0c 94 b4 01 	jmp	0x368	; 0x368 <__vector_11>
+  30:	0c 94 cf 00 	jmp	0x19e	; 0x19e <__vector_12>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 ec       	ldi	r30, 0xC6	; 198
+  68:	f3 e0       	ldi	r31, 0x03	; 3
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 36       	cpi	r26, 0x60	; 96
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	a0 e6       	ldi	r26, 0x60	; 96
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	ad 39       	cpi	r26, 0x9D	; 157
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 49 00 	call	0x92	; 0x92 <main>
+  8a:	0c 94 e1 01 	jmp	0x3c2	; 0x3c2 <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <main>:
+
+#include <avr/io.h>
+
+
+int main(void)
+{
+  92:	ff cf       	rjmp	.-2      	; 0x92 <main>
+
+00000094 <__vector_1>:
+void __vector_1 (void)__attribute__((signal));
+void __vector_2 (void)__attribute__((signal));
+void __vector_3 (void)__attribute__((signal));
+
+void __vector_1 (void)
+{
+  94:	1f 92       	push	r1
+  96:	0f 92       	push	r0
+  98:	0f b6       	in	r0, 0x3f	; 63
+  9a:	0f 92       	push	r0
+  9c:	11 24       	eor	r1, r1
+  9e:	2f 93       	push	r18
+  a0:	3f 93       	push	r19
+  a2:	4f 93       	push	r20
+  a4:	5f 93       	push	r21
+  a6:	6f 93       	push	r22
+  a8:	7f 93       	push	r23
+  aa:	8f 93       	push	r24
+  ac:	9f 93       	push	r25
+  ae:	af 93       	push	r26
+  b0:	bf 93       	push	r27
+  b2:	ef 93       	push	r30
+  b4:	ff 93       	push	r31
+    if(pfun_ISRPointers[EXTI_INT0])
+  b6:	e0 91 66 00 	lds	r30, 0x0066	; 0x800066 <pfun_ISRPointers>
+  ba:	f0 91 67 00 	lds	r31, 0x0067	; 0x800067 <pfun_ISRPointers+0x1>
+  be:	30 97       	sbiw	r30, 0x00	; 0
+  c0:	29 f0       	breq	.+10     	; 0xcc <__vector_1+0x38>
+    {
+        pfun_ISRPointers[EXTI_INT0] (apvid_ISRParameters[EXTI_INT0]);
+  c2:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+  c6:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  ca:	09 95       	icall
+    }
+}
+  cc:	ff 91       	pop	r31
+  ce:	ef 91       	pop	r30
+  d0:	bf 91       	pop	r27
+  d2:	af 91       	pop	r26
+  d4:	9f 91       	pop	r25
+  d6:	8f 91       	pop	r24
+  d8:	7f 91       	pop	r23
+  da:	6f 91       	pop	r22
+  dc:	5f 91       	pop	r21
+  de:	4f 91       	pop	r20
+  e0:	3f 91       	pop	r19
+  e2:	2f 91       	pop	r18
+  e4:	0f 90       	pop	r0
+  e6:	0f be       	out	0x3f, r0	; 63
+  e8:	0f 90       	pop	r0
+  ea:	1f 90       	pop	r1
+  ec:	18 95       	reti
+
+000000ee <__vector_2>:
+//INT1
+void __vector_2 (void)
+{
+  ee:	1f 92       	push	r1
+  f0:	0f 92       	push	r0
+  f2:	0f b6       	in	r0, 0x3f	; 63
+  f4:	0f 92       	push	r0
+  f6:	11 24       	eor	r1, r1
+  f8:	2f 93       	push	r18
+  fa:	3f 93       	push	r19
+  fc:	4f 93       	push	r20
+  fe:	5f 93       	push	r21
+ 100:	6f 93       	push	r22
+ 102:	7f 93       	push	r23
+ 104:	8f 93       	push	r24
+ 106:	9f 93       	push	r25
+ 108:	af 93       	push	r26
+ 10a:	bf 93       	push	r27
+ 10c:	ef 93       	push	r30
+ 10e:	ff 93       	push	r31
+    if(pfun_ISRPointers[EXTI_INT1])
+ 110:	e0 91 68 00 	lds	r30, 0x0068	; 0x800068 <pfun_ISRPointers+0x2>
+ 114:	f0 91 69 00 	lds	r31, 0x0069	; 0x800069 <pfun_ISRPointers+0x3>
+ 118:	30 97       	sbiw	r30, 0x00	; 0
+ 11a:	29 f0       	breq	.+10     	; 0x126 <__vector_2+0x38>
+    {
+        pfun_ISRPointers[EXTI_INT1] (apvid_ISRParameters[EXTI_INT1]);
+ 11c:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <__DATA_REGION_ORIGIN__+0x2>
+ 120:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <__DATA_REGION_ORIGIN__+0x3>
+ 124:	09 95       	icall
+    }
+}
+ 126:	ff 91       	pop	r31
+ 128:	ef 91       	pop	r30
+ 12a:	bf 91       	pop	r27
+ 12c:	af 91       	pop	r26
+ 12e:	9f 91       	pop	r25
+ 130:	8f 91       	pop	r24
+ 132:	7f 91       	pop	r23
+ 134:	6f 91       	pop	r22
+ 136:	5f 91       	pop	r21
+ 138:	4f 91       	pop	r20
+ 13a:	3f 91       	pop	r19
+ 13c:	2f 91       	pop	r18
+ 13e:	0f 90       	pop	r0
+ 140:	0f be       	out	0x3f, r0	; 63
+ 142:	0f 90       	pop	r0
+ 144:	1f 90       	pop	r1
+ 146:	18 95       	reti
+
+00000148 <__vector_3>:
+//INT2
+void __vector_3 (void)
+{
+ 148:	1f 92       	push	r1
+ 14a:	0f 92       	push	r0
+ 14c:	0f b6       	in	r0, 0x3f	; 63
+ 14e:	0f 92       	push	r0
+ 150:	11 24       	eor	r1, r1
+ 152:	2f 93       	push	r18
+ 154:	3f 93       	push	r19
+ 156:	4f 93       	push	r20
+ 158:	5f 93       	push	r21
+ 15a:	6f 93       	push	r22
+ 15c:	7f 93       	push	r23
+ 15e:	8f 93       	push	r24
+ 160:	9f 93       	push	r25
+ 162:	af 93       	push	r26
+ 164:	bf 93       	push	r27
+ 166:	ef 93       	push	r30
+ 168:	ff 93       	push	r31
+    if(pfun_ISRPointers[EXTI_INT2])
+ 16a:	e0 91 6a 00 	lds	r30, 0x006A	; 0x80006a <pfun_ISRPointers+0x4>
+ 16e:	f0 91 6b 00 	lds	r31, 0x006B	; 0x80006b <pfun_ISRPointers+0x5>
+ 172:	30 97       	sbiw	r30, 0x00	; 0
+ 174:	19 f0       	breq	.+6      	; 0x17c <__vector_3+0x34>
+    {
+        pfun_ISRPointers[EXTI_INT2] (EXTI_INT2);
+ 176:	82 e0       	ldi	r24, 0x02	; 2
+ 178:	90 e0       	ldi	r25, 0x00	; 0
+ 17a:	09 95       	icall
+    }
+    
+}
+ 17c:	ff 91       	pop	r31
+ 17e:	ef 91       	pop	r30
+ 180:	bf 91       	pop	r27
+ 182:	af 91       	pop	r26
+ 184:	9f 91       	pop	r25
+ 186:	8f 91       	pop	r24
+ 188:	7f 91       	pop	r23
+ 18a:	6f 91       	pop	r22
+ 18c:	5f 91       	pop	r21
+ 18e:	4f 91       	pop	r20
+ 190:	3f 91       	pop	r19
+ 192:	2f 91       	pop	r18
+ 194:	0f 90       	pop	r0
+ 196:	0f be       	out	0x3f, r0	; 63
+ 198:	0f 90       	pop	r0
+ 19a:	1f 90       	pop	r1
+ 19c:	18 95       	reti
+
+0000019e <__vector_12>:
+
+// ISR
+void __vector_12 (void)__attribute__((signal));
+
+void __vector_12 (void)
+{
+ 19e:	1f 92       	push	r1
+ 1a0:	0f 92       	push	r0
+ 1a2:	0f b6       	in	r0, 0x3f	; 63
+ 1a4:	0f 92       	push	r0
+ 1a6:	11 24       	eor	r1, r1
+    #if SPI_ISR_STATUS == SPI_INTERNAL_ISR        
+    
+        #if SPI_MCU_MODE == SPI_MASTER_MODE
+    
+            if ((SPCR >> SPCR_MSTR) & 1) // Making sure the SPIF was rasied due to an SPI operation ending
+ 1a8:	6c 99       	sbic	0x0d, 4	; 13
+            {
+                LOC_u8_SPIState = SPI_FREE;
+ 1aa:	10 92 6c 00 	sts	0x006C, r1	; 0x80006c <LOC_u8_SPIState>
+    #else
+    
+        #error SPI_EXTERNAL_ISR is invald
+    
+    #endif
+}
+ 1ae:	0f 90       	pop	r0
+ 1b0:	0f be       	out	0x3f, r0	; 63
+ 1b2:	0f 90       	pop	r0
+ 1b4:	1f 90       	pop	r1
+ 1b6:	18 95       	reti
+
+000001b8 <__vector_6>:
+void __vector_7 (void)__attribute__((signal));
+void __vector_8 (void)__attribute__((signal));
+void __vector_9 (void)__attribute__((signal));
+
+void __vector_6 (void)
+{
+ 1b8:	1f 92       	push	r1
+ 1ba:	0f 92       	push	r0
+ 1bc:	0f b6       	in	r0, 0x3f	; 63
+ 1be:	0f 92       	push	r0
+ 1c0:	11 24       	eor	r1, r1
+ 1c2:	2f 93       	push	r18
+ 1c4:	3f 93       	push	r19
+ 1c6:	4f 93       	push	r20
+ 1c8:	5f 93       	push	r21
+ 1ca:	6f 93       	push	r22
+ 1cc:	7f 93       	push	r23
+ 1ce:	8f 93       	push	r24
+ 1d0:	9f 93       	push	r25
+ 1d2:	af 93       	push	r26
+ 1d4:	bf 93       	push	r27
+ 1d6:	ef 93       	push	r30
+ 1d8:	ff 93       	push	r31
+    if(LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CAPTURE_EVENT_ISR])
+ 1da:	e0 91 75 00 	lds	r30, 0x0075	; 0x800075 <LOC_apfun_IntServiceRoutinesFunctions>
+ 1de:	f0 91 76 00 	lds	r31, 0x0076	; 0x800076 <LOC_apfun_IntServiceRoutinesFunctions+0x1>
+ 1e2:	30 97       	sbiw	r30, 0x00	; 0
+ 1e4:	29 f0       	breq	.+10     	; 0x1f0 <__vector_6+0x38>
+    {
+       LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CAPTURE_EVENT_ISR](LOC_apvid_IntServiceRoutinesParameters[TIMER1_CAPTURE_EVENT_ISR]);
+ 1e6:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <LOC_apvid_IntServiceRoutinesParameters>
+ 1ea:	90 91 6e 00 	lds	r25, 0x006E	; 0x80006e <LOC_apvid_IntServiceRoutinesParameters+0x1>
+ 1ee:	09 95       	icall
+    }
+}
+ 1f0:	ff 91       	pop	r31
+ 1f2:	ef 91       	pop	r30
+ 1f4:	bf 91       	pop	r27
+ 1f6:	af 91       	pop	r26
+ 1f8:	9f 91       	pop	r25
+ 1fa:	8f 91       	pop	r24
+ 1fc:	7f 91       	pop	r23
+ 1fe:	6f 91       	pop	r22
+ 200:	5f 91       	pop	r21
+ 202:	4f 91       	pop	r20
+ 204:	3f 91       	pop	r19
+ 206:	2f 91       	pop	r18
+ 208:	0f 90       	pop	r0
+ 20a:	0f be       	out	0x3f, r0	; 63
+ 20c:	0f 90       	pop	r0
+ 20e:	1f 90       	pop	r1
+ 210:	18 95       	reti
+
+00000212 <__vector_7>:
+
+void __vector_7 (void)
+{
+ 212:	1f 92       	push	r1
+ 214:	0f 92       	push	r0
+ 216:	0f b6       	in	r0, 0x3f	; 63
+ 218:	0f 92       	push	r0
+ 21a:	11 24       	eor	r1, r1
+ 21c:	2f 93       	push	r18
+ 21e:	3f 93       	push	r19
+ 220:	4f 93       	push	r20
+ 222:	5f 93       	push	r21
+ 224:	6f 93       	push	r22
+ 226:	7f 93       	push	r23
+ 228:	8f 93       	push	r24
+ 22a:	9f 93       	push	r25
+ 22c:	af 93       	push	r26
+ 22e:	bf 93       	push	r27
+ 230:	ef 93       	push	r30
+ 232:	ff 93       	push	r31
+    if(LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CTC_A_ISR])
+ 234:	e0 91 77 00 	lds	r30, 0x0077	; 0x800077 <LOC_apfun_IntServiceRoutinesFunctions+0x2>
+ 238:	f0 91 78 00 	lds	r31, 0x0078	; 0x800078 <LOC_apfun_IntServiceRoutinesFunctions+0x3>
+ 23c:	30 97       	sbiw	r30, 0x00	; 0
+ 23e:	29 f0       	breq	.+10     	; 0x24a <__vector_7+0x38>
+    {
+       LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CTC_A_ISR](LOC_apvid_IntServiceRoutinesParameters[TIMER1_CTC_A_ISR]);
+ 240:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <LOC_apvid_IntServiceRoutinesParameters+0x2>
+ 244:	90 91 70 00 	lds	r25, 0x0070	; 0x800070 <LOC_apvid_IntServiceRoutinesParameters+0x3>
+ 248:	09 95       	icall
+    }
+}
+ 24a:	ff 91       	pop	r31
+ 24c:	ef 91       	pop	r30
+ 24e:	bf 91       	pop	r27
+ 250:	af 91       	pop	r26
+ 252:	9f 91       	pop	r25
+ 254:	8f 91       	pop	r24
+ 256:	7f 91       	pop	r23
+ 258:	6f 91       	pop	r22
+ 25a:	5f 91       	pop	r21
+ 25c:	4f 91       	pop	r20
+ 25e:	3f 91       	pop	r19
+ 260:	2f 91       	pop	r18
+ 262:	0f 90       	pop	r0
+ 264:	0f be       	out	0x3f, r0	; 63
+ 266:	0f 90       	pop	r0
+ 268:	1f 90       	pop	r1
+ 26a:	18 95       	reti
+
+0000026c <__vector_8>:
+
+void __vector_8 (void)
+{
+ 26c:	1f 92       	push	r1
+ 26e:	0f 92       	push	r0
+ 270:	0f b6       	in	r0, 0x3f	; 63
+ 272:	0f 92       	push	r0
+ 274:	11 24       	eor	r1, r1
+ 276:	2f 93       	push	r18
+ 278:	3f 93       	push	r19
+ 27a:	4f 93       	push	r20
+ 27c:	5f 93       	push	r21
+ 27e:	6f 93       	push	r22
+ 280:	7f 93       	push	r23
+ 282:	8f 93       	push	r24
+ 284:	9f 93       	push	r25
+ 286:	af 93       	push	r26
+ 288:	bf 93       	push	r27
+ 28a:	ef 93       	push	r30
+ 28c:	ff 93       	push	r31
+    if(LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CTC_B_ISR])
+ 28e:	e0 91 79 00 	lds	r30, 0x0079	; 0x800079 <LOC_apfun_IntServiceRoutinesFunctions+0x4>
+ 292:	f0 91 7a 00 	lds	r31, 0x007A	; 0x80007a <LOC_apfun_IntServiceRoutinesFunctions+0x5>
+ 296:	30 97       	sbiw	r30, 0x00	; 0
+ 298:	29 f0       	breq	.+10     	; 0x2a4 <__vector_8+0x38>
+    {
+       LOC_apfun_IntServiceRoutinesFunctions[TIMER1_CTC_B_ISR](LOC_apvid_IntServiceRoutinesParameters[TIMER1_CTC_B_ISR]);
+ 29a:	80 91 71 00 	lds	r24, 0x0071	; 0x800071 <LOC_apvid_IntServiceRoutinesParameters+0x4>
+ 29e:	90 91 72 00 	lds	r25, 0x0072	; 0x800072 <LOC_apvid_IntServiceRoutinesParameters+0x5>
+ 2a2:	09 95       	icall
+    }
+}
+ 2a4:	ff 91       	pop	r31
+ 2a6:	ef 91       	pop	r30
+ 2a8:	bf 91       	pop	r27
+ 2aa:	af 91       	pop	r26
+ 2ac:	9f 91       	pop	r25
+ 2ae:	8f 91       	pop	r24
+ 2b0:	7f 91       	pop	r23
+ 2b2:	6f 91       	pop	r22
+ 2b4:	5f 91       	pop	r21
+ 2b6:	4f 91       	pop	r20
+ 2b8:	3f 91       	pop	r19
+ 2ba:	2f 91       	pop	r18
+ 2bc:	0f 90       	pop	r0
+ 2be:	0f be       	out	0x3f, r0	; 63
+ 2c0:	0f 90       	pop	r0
+ 2c2:	1f 90       	pop	r1
+ 2c4:	18 95       	reti
+
+000002c6 <__vector_9>:
+
+void __vector_9 (void)
+{
+ 2c6:	1f 92       	push	r1
+ 2c8:	0f 92       	push	r0
+ 2ca:	0f b6       	in	r0, 0x3f	; 63
+ 2cc:	0f 92       	push	r0
+ 2ce:	11 24       	eor	r1, r1
+ 2d0:	2f 93       	push	r18
+ 2d2:	3f 93       	push	r19
+ 2d4:	4f 93       	push	r20
+ 2d6:	5f 93       	push	r21
+ 2d8:	6f 93       	push	r22
+ 2da:	7f 93       	push	r23
+ 2dc:	8f 93       	push	r24
+ 2de:	9f 93       	push	r25
+ 2e0:	af 93       	push	r26
+ 2e2:	bf 93       	push	r27
+ 2e4:	ef 93       	push	r30
+ 2e6:	ff 93       	push	r31
+    if(LOC_apfun_IntServiceRoutinesFunctions[TIMER1_OVERFLOW_ISR])
+ 2e8:	e0 91 7b 00 	lds	r30, 0x007B	; 0x80007b <LOC_apfun_IntServiceRoutinesFunctions+0x6>
+ 2ec:	f0 91 7c 00 	lds	r31, 0x007C	; 0x80007c <LOC_apfun_IntServiceRoutinesFunctions+0x7>
+ 2f0:	30 97       	sbiw	r30, 0x00	; 0
+ 2f2:	29 f0       	breq	.+10     	; 0x2fe <__vector_9+0x38>
+    {
+       LOC_apfun_IntServiceRoutinesFunctions[TIMER1_OVERFLOW_ISR](LOC_apvid_IntServiceRoutinesParameters[TIMER1_OVERFLOW_ISR]);
+ 2f4:	80 91 73 00 	lds	r24, 0x0073	; 0x800073 <LOC_apvid_IntServiceRoutinesParameters+0x6>
+ 2f8:	90 91 74 00 	lds	r25, 0x0074	; 0x800074 <LOC_apvid_IntServiceRoutinesParameters+0x7>
+ 2fc:	09 95       	icall
+    }
+}
+ 2fe:	ff 91       	pop	r31
+ 300:	ef 91       	pop	r30
+ 302:	bf 91       	pop	r27
+ 304:	af 91       	pop	r26
+ 306:	9f 91       	pop	r25
+ 308:	8f 91       	pop	r24
+ 30a:	7f 91       	pop	r23
+ 30c:	6f 91       	pop	r22
+ 30e:	5f 91       	pop	r21
+ 310:	4f 91       	pop	r20
+ 312:	3f 91       	pop	r19
+ 314:	2f 91       	pop	r18
+ 316:	0f 90       	pop	r0
+ 318:	0f be       	out	0x3f, r0	; 63
+ 31a:	0f 90       	pop	r0
+ 31c:	1f 90       	pop	r1
+ 31e:	18 95       	reti
+
+00000320 <__vector_4>:
+void __vector_11 (void)__attribute__((signal));
+
+
+void __vector_4 (void)
+{
+    if(apfun_ISRpointers[TIMER_2_CTC_ISR])
+ 320:	e0 91 8d 00 	lds	r30, 0x008D	; 0x80008d <apfun_ISRpointers>
+ 324:	f0 91 8e 00 	lds	r31, 0x008E	; 0x80008e <apfun_ISRpointers+0x1>
+ 328:	30 97       	sbiw	r30, 0x00	; 0
+ 32a:	29 f0       	breq	.+10     	; 0x336 <__vector_4+0x16>
+    {
+       apfun_ISRpointers[TIMER_2_CTC_ISR](apvid_ISRParameters[TIMER_2_CTC_ISR]);
+ 32c:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <apvid_ISRParameters>
+ 330:	90 91 7e 00 	lds	r25, 0x007E	; 0x80007e <apvid_ISRParameters+0x1>
+ 334:	09 95       	icall
+ 336:	08 95       	ret
+
+00000338 <__vector_5>:
+    }
+}
+
+void __vector_5 (void)
+{
+    if(apfun_ISRpointers[TIMER_2_CTC_ISR])
+ 338:	e0 91 8d 00 	lds	r30, 0x008D	; 0x80008d <apfun_ISRpointers>
+ 33c:	f0 91 8e 00 	lds	r31, 0x008E	; 0x80008e <apfun_ISRpointers+0x1>
+ 340:	30 97       	sbiw	r30, 0x00	; 0
+ 342:	29 f0       	breq	.+10     	; 0x34e <__vector_5+0x16>
+    {
+       apfun_ISRpointers[TIMER_2_CTC_ISR](apvid_ISRParameters[TIMER_2_CTC_ISR]);
+ 344:	80 91 7d 00 	lds	r24, 0x007D	; 0x80007d <apvid_ISRParameters>
+ 348:	90 91 7e 00 	lds	r25, 0x007E	; 0x80007e <apvid_ISRParameters+0x1>
+ 34c:	09 95       	icall
+ 34e:	08 95       	ret
+
+00000350 <__vector_10>:
+    }
+}
+
+void __vector_10 (void)
+{
+    if(apfun_ISRpointers[TIMER_0_CTC_ISR])
+ 350:	e0 91 99 00 	lds	r30, 0x0099	; 0x800099 <apfun_ISRpointers+0xc>
+ 354:	f0 91 9a 00 	lds	r31, 0x009A	; 0x80009a <apfun_ISRpointers+0xd>
+ 358:	30 97       	sbiw	r30, 0x00	; 0
+ 35a:	29 f0       	breq	.+10     	; 0x366 <__vector_10+0x16>
+    {
+       apfun_ISRpointers[TIMER_0_CTC_ISR](apvid_ISRParameters[TIMER_0_CTC_ISR]);
+ 35c:	80 91 89 00 	lds	r24, 0x0089	; 0x800089 <apvid_ISRParameters+0xc>
+ 360:	90 91 8a 00 	lds	r25, 0x008A	; 0x80008a <apvid_ISRParameters+0xd>
+ 364:	09 95       	icall
+ 366:	08 95       	ret
+
+00000368 <__vector_11>:
+    }
+}
+
+void __vector_11 (void)
+{
+ 368:	1f 92       	push	r1
+ 36a:	0f 92       	push	r0
+ 36c:	0f b6       	in	r0, 0x3f	; 63
+ 36e:	0f 92       	push	r0
+ 370:	11 24       	eor	r1, r1
+ 372:	2f 93       	push	r18
+ 374:	3f 93       	push	r19
+ 376:	4f 93       	push	r20
+ 378:	5f 93       	push	r21
+ 37a:	6f 93       	push	r22
+ 37c:	7f 93       	push	r23
+ 37e:	8f 93       	push	r24
+ 380:	9f 93       	push	r25
+ 382:	af 93       	push	r26
+ 384:	bf 93       	push	r27
+ 386:	ef 93       	push	r30
+ 388:	ff 93       	push	r31
+    if(apfun_ISRpointers[TIMER_0_OVERFLOW_ISR])
+ 38a:	e0 91 9b 00 	lds	r30, 0x009B	; 0x80009b <apfun_ISRpointers+0xe>
+ 38e:	f0 91 9c 00 	lds	r31, 0x009C	; 0x80009c <apfun_ISRpointers+0xf>
+ 392:	30 97       	sbiw	r30, 0x00	; 0
+ 394:	29 f0       	breq	.+10     	; 0x3a0 <__vector_11+0x38>
+    {
+        apfun_ISRpointers[TIMER_0_OVERFLOW_ISR](apvid_ISRParameters[TIMER_0_OVERFLOW_ISR]);
+ 396:	80 91 8b 00 	lds	r24, 0x008B	; 0x80008b <apvid_ISRParameters+0xe>
+ 39a:	90 91 8c 00 	lds	r25, 0x008C	; 0x80008c <apvid_ISRParameters+0xf>
+ 39e:	09 95       	icall
+    }
+}
+ 3a0:	ff 91       	pop	r31
+ 3a2:	ef 91       	pop	r30
+ 3a4:	bf 91       	pop	r27
+ 3a6:	af 91       	pop	r26
+ 3a8:	9f 91       	pop	r25
+ 3aa:	8f 91       	pop	r24
+ 3ac:	7f 91       	pop	r23
+ 3ae:	6f 91       	pop	r22
+ 3b0:	5f 91       	pop	r21
+ 3b2:	4f 91       	pop	r20
+ 3b4:	3f 91       	pop	r19
+ 3b6:	2f 91       	pop	r18
+ 3b8:	0f 90       	pop	r0
+ 3ba:	0f be       	out	0x3f, r0	; 63
+ 3bc:	0f 90       	pop	r0
+ 3be:	1f 90       	pop	r1
+ 3c0:	18 95       	reti
+
+000003c2 <_exit>:
+ 3c2:	f8 94       	cli
+
+000003c4 <__stop_program>:
+ 3c4:	ff cf       	rjmp	.-2      	; 0x3c4 <__stop_program>
