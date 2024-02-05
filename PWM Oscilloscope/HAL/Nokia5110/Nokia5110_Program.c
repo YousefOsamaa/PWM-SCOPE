@@ -399,9 +399,150 @@ extern ErrorState_t NOKIA5110_enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, 
     return Local_u8_ErrorFlag;
 }
 
-extern ErrorState_t NOKIA5110_enu_DrawNumber()
+/**
+ * @brief Prints a number given its beginng point 
+ * 
+ * @param Copy_f32_Number Decimal number
+ * @param Copy_u8_Ystart y - coordinate of the top left corner for the first digit
+ * @param Copy_u8_Xstart y - coordinate of the top left corner for the first digit
+ * @param Copy_u8_Colour Colour
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_DrawNumber(f32 Copy_f32_Number, u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
+    
+    //Flags
+    u8 Local_u8_Validation = False, Local_u8_NegativeNumberFlag = False;
+
+    //Variables
+    u32 Local_u32_PreDecimalPoint = 0;  //Contains whole digits
+    f32 Local_f32_PostDecimalPoint = 0; //Contains decimal digits
+
+    //Counters
+    u8 Local_u8_Counter1 = 0, Local_u8_Counter2 = 0, Local_u8_Counter3 = 0, Local_u8_Counter4 = 0;
+
+    //Printing Counters
+    u8 Local_u8_x = 0, Local_u8_y = 0;
+
+    //Temps
+    u32 Local_u32_TempVariable = 0;
+
+    Local_u8_Validation = (Copy_u8_Ystart >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ystart <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_Xstart >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_Xstart <= NOKIA5110_X_COORDINATE_MAX) && (Copy_u8_Colour == NOKIA5110_BLACK_COLOUR || Copy_u8_Colour == NOKIA5110_WHITE_COLOUR);
+
+    if(Local_u8_Validation)
+    {
+        u8 Local_au8_PrintingArray[NOKIA5110_MAX_DIGITS]= {0}; //Printing array
+
+        //Checking wether the number is negative
+        if(Copy_f32_Number < 0)
+        {
+            Local_u8_NegativeNumberFlag = True; //Raises Flag
+
+            Copy_f32_Number *= -1; //Getting rid of egative sign
+        }
+
+        //Separating Whole and Decimal digits
+        Local_u32_PreDecimalPoint = Copy_f32_Number;
+        Local_f32_PostDecimalPoint = Copy_f32_Number - (f32)Local_u32_PreDecimalPoint;
+
+
+        //Placing the Pre-Decimal point digits in the array
+        Local_u8_Counter1 = 0; 
+        do
+        {
+            Local_au8_PrintingArray[Local_u8_Counter1] = (Local_u32_PreDecimalPoint % 10) + 48; //Placing last digit and in the array
+
+            Local_u32_PreDecimalPoint /= 10; //Erasing the last digit
+
+            Local_u8_Counter1++;
+
+        }while (Local_u32_PreDecimalPoint);
+
+
+        //Placing the Pre-Decimal point digits in the array
+        if(Local_f32_PostDecimalPoint) //If there are Post-Decimal point digits
+        {
+            Local_u8_Counter2 = Local_u8_Counter1;
+
+            Local_u8_Counter3 = 0; //To count the number of decimals
+            while (Local_f32_PostDecimalPoint && !(Local_u8_Counter3 == NOKIA5110_FLOAT_POINTS))
+            {
+                // ex: .145
+                Local_f32_PostDecimalPoint *= 10; //1.45, 4.5
+
+                Local_u32_TempVariable = Local_f32_PostDecimalPoint; //1, 4
+
+                Local_au8_PrintingArray[Local_u8_Counter2] = (Local_u32_TempVariable + 48); //1, 4
+
+                Local_f32_PostDecimalPoint -= Local_u32_TempVariable; //.45, .5
+
+                //Incrementing Counters
+                Local_u8_Counter2++;                
+                Local_u8_Counter3++;  
+
+                //Rounding the number
+                if(Local_u8_Counter3 == NOKIA5110_FLOAT_POINTS)
+                {     
+                    Local_u32_TempVariable = Local_f32_PostDecimalPoint*10; //5
+
+                    if(Local_u32_TempVariable >= 5)
+                    {
+                        Local_au8_PrintingArray[Local_u8_Counter2 - 1]++; //Rounding the digit
+                    }
+
+                }              
+
+            }
+        }
+
+
+        //Printing Array
+        Local_u8_y = Copy_u8_Ystart;
+        Local_u8_x = Copy_u8_Xstart;
+        if(Local_u8_NegativeNumberFlag)
+        {
+            enu_DrawASCII('-',Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing Negative Sign
+                
+            //Incrementing to the next character
+            Local_u8_x += 6; 
+            
+        }
+
+
+        for(Local_u8_Counter4 = Local_u8_Counter1; Local_u8_Counter4 >= 1; Local_u8_Counter4--)//Whole digits
+        {
+            enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4 - 1], Local_u8_y, Local_u8_x, Copy_u8_Colour); 
+            
+            //Incrementing to the next character
+            Local_u8_x += 6; 
+            
+        }
+
+        Local_u8_x -= 1; 
+        if(Local_u8_Counter2 != 0) //there are decimals
+        {
+            enu_DrawASCII('.', Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing Decimal Point
+
+            Local_u8_x += 5;
+
+            for(Local_u8_Counter4 = Local_u8_Counter1; Local_u8_Counter4 < Local_u8_Counter2; Local_u8_Counter4++)//Decimal Digits
+            {
+                enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4], Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing whole digits
+                
+                //Incrementing to the next character
+                Local_u8_x += 6; 
+            }
+            
+        }
+ 
+        Local_u8_ErrorFlag = ES_OK;
+
+    }
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
 
 
     return Local_u8_ErrorFlag;
@@ -426,10 +567,9 @@ extern ErrorState_t NOKIA5110_enu_DrawPattern()
  */
 extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour){
     u8 Local_u8_ErrorFlag = ES_NOK;
+
     s16 Local_s16_dx = 0; //delta x 
     s16 Local_s16_dy = 0; //delta y 
-    s16 Local_s16_D = 0; //error 
-    u8 Local_u8_x = 0, Local_u8_y = 0; //Graphing counters
 
     
     if(1)
@@ -439,11 +579,14 @@ extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart,
 
         if(!Local_s16_dx) //if the line is vertical
         {
-            enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, (Copy_u8_Yend - Copy_u8_Ystart), Copy_u8_Colour);
+            General_enu_AbsoluteIntegers(&Local_s16_dy);
+            
+            enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dy + 1, Copy_u8_Colour);
         }
         else if(!Local_s16_dy)//if the line is horizontal
-        {
-            enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_Xstart, (Copy_u8_Xend - Copy_u8_Xstart), Copy_u8_Colour);        
+        {   
+            General_enu_AbsoluteIntegers(&Local_s16_dx);
+            enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dx + 1, Copy_u8_Colour);        
         }
         else //line has a slope
         {
@@ -1075,7 +1218,7 @@ static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart,
     u8 Local_u8_WrapAround = False;
     u8 Local_u8_LineEnd = 0;
     
-    u8 Local_u8_Validation = (Copy_u8_Ystart >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ystart <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_xStart >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_xStart <= NOKIA5110_X_COORDINATE_MAX) && (Copy_u8_Colour == NOKIA5110_BLACK_COLOUR || Copy_u8_Colour == NOKIA5110_WHITE_COLOUR) && (Copy_u8_Length <= NOKIA5110_X_COORDINATE_MAX + 1);
+    u8 Local_u8_Validation = (Copy_u8_Ystart >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ystart <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_xStart >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_xStart <= NOKIA5110_X_COORDINATE_MAX) && (Copy_u8_Colour == NOKIA5110_BLACK_COLOUR || Copy_u8_Colour == NOKIA5110_WHITE_COLOUR);
     
     if(Local_u8_Validation)
     {
@@ -1097,6 +1240,7 @@ static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart,
     }
     else
     {
+
         Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
     }
 

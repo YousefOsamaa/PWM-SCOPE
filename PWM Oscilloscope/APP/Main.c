@@ -10,14 +10,10 @@ void main(void)
 	
 	//initializaions
 	NOKIA5110_enu_Initialization();
-
-	// nokia5110_enu_drawcharacter(0x1e, 0,0 , nokia5110_black_colour,1,1);
-	// nokia5110_enu_drawcharacter(0x1f, 8,0 , nokia5110_black_colour,1,1);
-	// NOKIA5110_enu_DrawCharacter(0xe,6, 0, NOKIA5110_BLACK_COLOUR);
-	NOKIA5110_enu_DrawLine(7, 0, 7, 17, NOKIA5110_BLACK_COLOUR);	
-	NOKIA5110_enu_DrawLine(10, 15, 10, 17, NOKIA5110_BLACK_COLOUR);	
-
-	NOKIA5110_enu_DrawHorizontalLine(15, 80, 10, NOKIA5110_BLACK_COLOUR);	
+	
+	
+	NOKIA5110_enu_DrawNumber(-4743.545, 0, 0, NOKIA5110_BLACK_COLOUR);
+	NOKIA5110_enu_DrawNumber(3, 0, 6, NOKIA5110_BLACK_COLOUR);
 
 	while(1)
 	{

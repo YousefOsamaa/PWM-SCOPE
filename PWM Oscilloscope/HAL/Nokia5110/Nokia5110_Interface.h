@@ -83,7 +83,7 @@ extern ErrorState_t NOKIA5110_enu_DrawCharacter(u8 Copy_u8_ASCII, u8 Copy_u8_Y, 
 
 extern ErrorState_t NOKIA5110_enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Length, u8 Copy_u8_Width, u8 Copy_u8_Colour);
 
-extern ErrorState_t NOKIA5110_enu_DrawNumber();
+extern ErrorState_t NOKIA5110_enu_DrawNumber(f32 Copy_f32_Number, u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Colour);
 
 extern ErrorState_t NOKIA5110_enu_DrawPattern();
 
