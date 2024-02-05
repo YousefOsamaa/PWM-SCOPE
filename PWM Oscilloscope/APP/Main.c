@@ -7,16 +7,15 @@
 void main(void)
 {
 
-	
+	u8 i = 0;
 	//initializaions
 	NOKIA5110_enu_Initialization();
-	
-	
-	NOKIA5110_enu_DrawNumber(-4743.545, 0, 0, NOKIA5110_BLACK_COLOUR);
-	NOKIA5110_enu_DrawNumber(3, 0, 6, NOKIA5110_BLACK_COLOUR);
 
+
+	NOKIA5110_enu_DrawPixel(24,5, NOKIA5110_BLACK_COLOUR);
+	NOKIA5110_enu_CopyPixelByCooridnates(24,5, 0,0);	
 	while(1)
-	{
+	{		
 
 	}
 

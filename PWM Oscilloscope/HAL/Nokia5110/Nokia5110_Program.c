@@ -565,13 +565,13 @@ extern ErrorState_t NOKIA5110_enu_DrawPattern()
  * @param Copy_u8_Xend  ending x - coordinate
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour){
+extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour)
+{
     u8 Local_u8_ErrorFlag = ES_NOK;
 
     s16 Local_s16_dx = 0; //delta x 
     s16 Local_s16_dy = 0; //delta y 
 
-    
     if(1)
     {
         Local_s16_dx = Copy_u8_Xend - Copy_u8_Xstart;
@@ -632,6 +632,62 @@ extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_
 
     return Local_u8_ErrorFlag;
 }
+
+/**
+ * @brief Shifts a pixel in the specified direction
+ * 
+ * @param Copy_u8_Y  y - coordinate of the pixel
+ * @param Copy_u8_X  x - coordinate of the pixel
+ * @param Copy_s32_ShiftMagnitude Shift magnitude (Right and Upward shift (+) ) or (Left and Downward shift (-) )
+ * @param Copy_u8_Direction Shifting Direction (NOKIA5110_SHIFT_VERTICAL AND NOKIA5110_SHIFT_HORIZONTAL)     
+
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    Local_u8_ErrorFlag = enu_ShiftPixel(Copy_u8_Y, Copy_u8_X, Copy_s32_ShiftMagnitude, Copy_u8_Direction);
+    
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Copies a pixel into a new location given a shifting magnitude and direction
+ * 
+ * @param Copy_u8_Y y - coordinates of the desired pixel
+ * @param Copy_u8_X x - coordinates of the desired pixel
+ * @param Copy_s32_ShiftMagnitude Shift magnitude (Right and Downward shift (+) ) or (Left and Upward shift (-) )
+ * @param Copy_u8_Direction Shifting Direction (NOKIA5110_SHIFT_VERTICAL AND NOKIA5110_SHIFT_HORIZONTAL)     
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_CopyPixelByShifting(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    Local_u8_ErrorFlag = enu_CopyPixelByShifting(Copy_u8_Y, Copy_u8_X, Copy_s32_ShiftMagnitude, Copy_u8_Direction);
+
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Copies a pixel into a new location given a desred coordinates
+ * 
+ * @param Copy_u8_Yoriginal y - coordinates of the desired pixel
+ * @param Copy_u8_Xoriginal x - coordinates of the desired pixel
+ * @param Copy_u8_Ycopied y - coordinates of the destination pixel
+ * @param Copy_u8_Xcopied x - coordinates of the destination pixel
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u8 Copy_u8_Xoriginal, u8 Copy_u8_Ycopied, u8 Copy_u8_Xcopied)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    Local_u8_ErrorFlag = enu_CopyPixelByCooridnates(Copy_u8_Yoriginal, Copy_u8_Xoriginal, Copy_u8_Ycopied, Copy_u8_Xcopied);
+
+    return Local_u8_ErrorFlag;
+}
+
 
 //Local Functions
 /**
@@ -1246,4 +1302,241 @@ static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart,
 
     return Local_u8_ErrorFlag;
 
+}
+
+/**
+ * @brief Shifts a pixel in the specified direction
+ * 
+ * @param Copy_u8_Y  y - coordinate of the pixel
+ * @param Copy_u8_X  x - coordinate of the pixel
+ * @param Copy_s32_ShiftMagnitude Shift magnitude (Right and Downward shift (+) ) or (Left and Upward shift (-) )
+ * @param Copy_u8_Direction Shifting Direction (NOKIA5110_SHIFT_VERTICAL AND NOKIA5110_SHIFT_HORIZONTAL)     
+
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_Xaddress = 0, Local_u8_Yaddress = 0, Local_u8_Bit = 0, Local_u8_BitNumber = 0, Local_u8_DataFrame = 0;
+    s16 Local_s16_NewPosition = 0; //New Position
+
+    u8 Local_u8_Validation = (Copy_u8_Y >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Y <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_X >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_X <= NOKIA5110_X_COORDINATE_MAX);
+
+    if(Local_u8_Validation)
+    {
+        //Getting Addresses
+        Local_u8_Xaddress = Copy_u8_X; //X doesnt need conversion
+        Local_u8_Yaddress = Copy_u8_Y;
+        enu_ConvertCoordinatesToAddresses(&Local_u8_Yaddress);
+
+        //Getting Byte
+        Local_u8_DataFrame = LOC_au8_BufferArray[Local_u8_Yaddress][Local_u8_Xaddress]; //Whole frame of the bit's column
+
+        //Isolating Bit Value
+        Local_u8_BitNumber = (Copy_u8_Y % 8);
+        Local_u8_Bit = (Local_u8_DataFrame >> Local_u8_BitNumber) & 1; //Saving bit value
+
+        enu_DrawPixel(Copy_u8_Y, Copy_u8_X, (Local_u8_Bit == NOKIA5110_WHITE_COLOUR) ); //Erasing pixel from lcd
+        
+        if(Copy_u8_Direction == NOKIA5110_SHIFT_HORIZONTAL)
+        {
+            //Shift to the right and left
+
+            Local_s16_NewPosition = Copy_u8_X + (Copy_s32_ShiftMagnitude % NOKIA5110_LCD_LENGTH);
+
+            if(Local_s16_NewPosition < 0)
+            {
+                Local_s16_NewPosition += NOKIA5110_LCD_LENGTH; //Enabling Over Lapping in the -x direction
+            }
+
+            enu_DrawPixel(Copy_u8_Y, Local_s16_NewPosition, Local_u8_Bit); //Drawing pixel to new location
+
+            Local_u8_ErrorFlag = ES_OK;
+        }
+        else if(Copy_u8_Direction == NOKIA5110_SHIFT_VERTICAL)
+        {
+            //Shift up and down 
+
+            Local_s16_NewPosition = Copy_u8_Y + (Copy_s32_ShiftMagnitude % NOKIA5110_LCD_WIDTH);
+
+            if(Local_s16_NewPosition < 0)
+            {
+                Local_s16_NewPosition += NOKIA5110_LCD_WIDTH; //Enabling Over Lapping in the -y direction
+            }
+
+            enu_DrawPixel(Local_s16_NewPosition, Copy_u8_X, Local_u8_Bit); //Drawing pixel to new location
+            
+            Local_u8_ErrorFlag = ES_OK;
+        }
+
+    }   
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+    
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Gets the pixel Byte address in the LCD buffer and optionally the bit number
+ * 
+ * @param Copy_u8_Y y - coordinate of pixel  
+ * @param Copy_u8_X x - coordinate of pixel 
+ * @param Copy_pu8_ByteAddress A pointer to access th byte 
+ * @param Copy_pu8_PixelBitNumber a variable to place bit number in (Let equal NULL if redundant)
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_GetPixel(u8 Copy_u8_Y, u8 Copy_u8_X, u8* Copy_pu8_ByteAddress, u8* Copy_pu8_PixelBitNumber)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_Xaddress = 0, Local_u8_Yaddress = 0;
+    u8 Local_u8_Validation = (Copy_u8_Y >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Y <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_X >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_X <= NOKIA5110_X_COORDINATE_MAX);
+
+    if(Local_u8_Validation)
+    {
+        if(Copy_pu8_ByteAddress)
+        {
+            //Getting addresses
+            Local_u8_Xaddress = Copy_u8_X; //X doesnt need conversion
+            Local_u8_Yaddress = Copy_u8_Y;
+            enu_ConvertCoordinatesToAddresses(&Local_u8_Yaddress);
+
+            Copy_pu8_ByteAddress = &LOC_au8_BufferArray[Local_u8_Yaddress][Local_u8_Xaddress]; //Placing address insode pointer
+
+            if(Copy_pu8_PixelBitNumber)
+            {
+                *Copy_pu8_PixelBitNumber = Copy_u8_Y % 8;
+            }
+
+            Local_u8_ErrorFlag = ES_OK;
+        }
+        else
+        {
+            Local_u8_ErrorFlag = ES_NULL_POINTER;
+        }
+
+    }
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+    return Local_u8_ErrorFlag;    
+}
+
+/**
+ * @brief Copies a pixel into a new location given a shifting magnitude and direction
+ * 
+ * @param Copy_u8_Y y - coordinates of the desired pixel
+ * @param Copy_u8_X x - coordinates of the desired pixel
+ * @param Copy_s32_ShiftMagnitude Shift magnitude (Right and Downward shift (+) ) or (Left and Upward shift (-) )
+ * @param Copy_u8_Direction Shifting Direction (NOKIA5110_SHIFT_VERTICAL AND NOKIA5110_SHIFT_HORIZONTAL)     
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_CopyPixelByShifting(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_Xaddress = 0, Local_u8_Yaddress = 0, Local_u8_Bit = 0, Local_u8_BitNumber = 0, Local_u8_DataFrame = 0;
+    s16 Local_s16_NewPosition = 0; //New Position
+
+    u8 Local_u8_Validation = (Copy_u8_Y >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Y <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_X >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_X <= NOKIA5110_X_COORDINATE_MAX);
+
+    if(Local_u8_Validation)
+    {
+        //Getting Addresses
+        Local_u8_Xaddress = Copy_u8_X; //X doesnt need conversion
+        Local_u8_Yaddress = Copy_u8_Y;
+        enu_ConvertCoordinatesToAddresses(&Local_u8_Yaddress);
+
+        //Getting Byte
+        Local_u8_DataFrame = LOC_au8_BufferArray[Local_u8_Yaddress][Local_u8_Xaddress]; //Whole frame of the bit's column
+
+        //Isolating Bit Value
+        Local_u8_BitNumber = (Copy_u8_Y % 8);
+        Local_u8_Bit = (Local_u8_DataFrame >> Local_u8_BitNumber) & 1; //Saving bit value
+        
+        if(Copy_u8_Direction == NOKIA5110_SHIFT_HORIZONTAL)
+        {
+            //Shift to the right and left
+
+            Local_s16_NewPosition = Copy_u8_X + (Copy_s32_ShiftMagnitude % NOKIA5110_LCD_LENGTH);
+
+            if(Local_s16_NewPosition < 0)
+            {
+                Local_s16_NewPosition += NOKIA5110_LCD_LENGTH; //Enabling Over Lapping in the -x direction
+            }
+
+            enu_DrawPixel(Copy_u8_Y, Local_s16_NewPosition, Local_u8_Bit); //Drawing pixel to new location
+
+            Local_u8_ErrorFlag = ES_OK;
+        }
+        else if(Copy_u8_Direction == NOKIA5110_SHIFT_VERTICAL)
+        {
+            //Shift up and down 
+
+            Local_s16_NewPosition = Copy_u8_Y + (Copy_s32_ShiftMagnitude % NOKIA5110_LCD_WIDTH);
+
+            if(Local_s16_NewPosition < 0)
+            {
+                Local_s16_NewPosition += NOKIA5110_LCD_WIDTH; //Enabling Over Lapping in the -y direction
+            }
+
+            enu_DrawPixel(Local_s16_NewPosition, Copy_u8_X, Local_u8_Bit); //Drawing pixel to new location
+            
+            Local_u8_ErrorFlag = ES_OK;
+        }
+
+    }   
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+    
+    return Local_u8_ErrorFlag;
+
+}
+
+/**
+ * @brief Copies a pixel into a new location given a desred coordinates
+ * 
+ * @param Copy_u8_Yoriginal y - coordinates of the desired pixel
+ * @param Copy_u8_Xoriginal x - coordinates of the desired pixel
+ * @param Copy_u8_Ycopied y - coordinates of the destination pixel
+ * @param Copy_u8_Xcopied x - coordinates of the destination pixel
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u8 Copy_u8_Xoriginal, u8 Copy_u8_Ycopied, u8 Copy_u8_Xcopied)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_Xaddress = 0, Local_u8_Yaddress = 0, Local_u8_Bit = 0, Local_u8_BitNumber = 0, Local_u8_DataFrame = 0;
+    
+    u8 Local_u8_Validation01 = (Copy_u8_Yoriginal >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Yoriginal <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_Xoriginal >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_Xoriginal <= NOKIA5110_X_COORDINATE_MAX);
+    u8 Local_u8_Validation02 = (Copy_u8_Ycopied >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ycopied <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_Xcopied >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_Xcopied <= NOKIA5110_X_COORDINATE_MAX);
+    u8 Local_u8_Validation03 = !(Copy_u8_Yoriginal == Copy_u8_Ycopied && Copy_u8_Xoriginal == Copy_u8_Xcopied);
+    
+    if(Local_u8_Validation01 && Local_u8_Validation02 && Local_u8_Validation03)
+    {
+        //Getting Addresses of the original pixel
+        Local_u8_Xaddress = Copy_u8_Yoriginal; //X doesnt need conversion
+        Local_u8_Yaddress = Copy_u8_Xoriginal;
+        enu_ConvertCoordinatesToAddresses(&Local_u8_Yaddress);
+
+        //Getting Byte
+        Local_u8_DataFrame = LOC_au8_BufferArray[Local_u8_Yaddress][Local_u8_Xaddress]; //Whole frame of the bit's column
+
+        //Isolating Bit Value
+        Local_u8_BitNumber = (Copy_u8_Yoriginal % 8);
+        Local_u8_Bit = (Local_u8_DataFrame >> Local_u8_BitNumber) & 1; //Saving bit value
+        
+        enu_DrawPixel(Copy_u8_Ycopied, Copy_u8_Xcopied, Local_u8_Bit); //Placing new bit in desired coordinates
+            
+        Local_u8_ErrorFlag = ES_OK;
+
+    }   
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+    
+    return Local_u8_ErrorFlag;
 }

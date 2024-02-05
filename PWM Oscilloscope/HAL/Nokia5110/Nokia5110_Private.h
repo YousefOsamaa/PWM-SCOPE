@@ -96,8 +96,9 @@ typedef struct
 #define NOKIA5110_WHITE_COLOUR   (0) 
 #define NOKIA5110_BLACK_COLOUR   (1)
 
-//Character Sizes;
-
+//Shifting Directions
+#define NOKIA5110_SHIFT_VERTICAL       (0)
+#define NOKIA5110_SHIFT_HORIZONTAL     (1)
 
 
 static ErrorState_t enu_PassByteToSPI(u8 Copy_u8_Byte);
@@ -123,5 +124,13 @@ static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u
 static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour);
 
 static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour);
+
+static ErrorState_t enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
+
+static ErrorState_t enu_GetPixel(u8 Copy_u8_Y, u8 Copy_u8_X, u8* Copy_pu8_ByteAddress, u8* Copy_pu8_PixelBitNumber);
+
+static ErrorState_t enu_CopyPixelByShifting(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
+
+static ErrorState_t enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u8 Copy_u8_Xoriginal, u8 Copy_u8_Ycopied, u8 Copy_u8_Xcopied);
 
 #endif /* PCD8544_PRIVATE_H_ */

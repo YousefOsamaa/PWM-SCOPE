@@ -53,6 +53,11 @@ typedef struct
 #define NOKIA5110_WHITE_COLOUR   (0) 
 #define NOKIA5110_BLACK_COLOUR   (1)
 
+//Shifting Directions
+#define NOKIA5110_SHIFT_VERTICAL       (0)
+#define NOKIA5110_SHIFT_HORIZONTAL     (1)
+
+
 
 
 extern ErrorState_t NOKIA5110_enu_Initialization(void);
@@ -93,6 +98,11 @@ extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8
 
 extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour);
 
+extern ErrorState_t NOKIA5110_enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
+
+extern ErrorState_t NOKIA5110_enu_CopyPixelByShifting(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
+
+extern ErrorState_t NOKIA5110_enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u8 Copy_u8_Xoriginal, u8 Copy_u8_Ycopied, u8 Copy_u8_Xcopied);
 
 
 

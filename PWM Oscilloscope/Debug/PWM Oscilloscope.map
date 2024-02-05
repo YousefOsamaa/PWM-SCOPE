@@ -148,10 +148,18 @@ Discarded input sections
  .bss           0x00000000        0x0 HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_ClearRAM
                 0x00000000       0x4c HAL/Nokia5110/Nokia5110_Program.o
+ .text.enu_DrawFillRectangle
+                0x00000000       0xce HAL/Nokia5110/Nokia5110_Program.o
+ .text.enu_DrawASCII
+                0x00000000       0x7e HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_DrawVerticalLine
                 0x00000000       0x7a HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_DrawHorizontalLine
                 0x00000000       0x72 HAL/Nokia5110/Nokia5110_Program.o
+ .text.enu_ShiftPixel
+                0x00000000       0xfa HAL/Nokia5110/Nokia5110_Program.o
+ .text.enu_CopyPixelByShifting
+                0x00000000       0xec HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_DrawLine
                 0x00000000       0xee HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_SendCommand
@@ -170,12 +178,12 @@ Discarded input sections
                 0x00000000       0x2a HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_ClearScreen
                 0x00000000        0x8 HAL/Nokia5110/Nokia5110_Program.o
- .text.NOKIA5110_enu_DrawPixel
-                0x00000000        0x6 HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_DrawCharacter
                 0x00000000        0x8 HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_DrawFillRectangle
                 0x00000000       0x18 HAL/Nokia5110/Nokia5110_Program.o
+ .text.NOKIA5110_enu_DrawNumber
+                0x00000000      0x23a HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_DrawPattern
                 0x00000000        0x4 HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_DrawLine
@@ -184,6 +192,12 @@ Discarded input sections
                 0x00000000        0x6 HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_DrawHorizontalLine
                 0x00000000        0x6 HAL/Nokia5110/Nokia5110_Program.o
+ .text.NOKIA5110_enu_ShiftPixel
+                0x00000000        0xa HAL/Nokia5110/Nokia5110_Program.o
+ .text.NOKIA5110_enu_CopyPixelByShifting
+                0x00000000        0xa HAL/Nokia5110/Nokia5110_Program.o
+ .rodata.LOC_u8_ASCII
+                0x00000000      0x500 HAL/Nokia5110/Nokia5110_Program.o
  .text          0x00000000        0x0 LIB/General/General.o
  .data          0x00000000        0x0 LIB/General/General.o
  .bss           0x00000000        0x0 LIB/General/General.o
@@ -361,12 +375,18 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
+ .text.avr-libc.fplib
+                0x00000000        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(divsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(divsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(divsf3.o)
@@ -380,33 +400,53 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
+ .text.avr-libc.fplib
+                0x00000000       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
+ .text.avr-libc.fplib
+                0x00000000       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
+ .text.avr-libc.fplib
+                0x00000000       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
+ .text.avr-libc.fplib
+                0x00000000        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
+ .text.avr-libc.fplib
+                0x00000000        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
+ .text.avr-libc.fplib
+                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
+ .text.avr-libc.fplib
+                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
+ .text.avr-libc.fplib
+                0x00000000       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
+ .text.avr-libc.fplib
+                0x00000000       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
+ .text.avr-libc.fplib
+                0x00000000        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(gesf2.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(gesf2.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(gesf2.o)
@@ -415,14 +455,20 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc.mul
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
+ .text.libgcc.div
+                0x00000000       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
  .text.libgcc.prologue
                 0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
@@ -666,7 +712,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x1208
+.text           0x00000000      0xb6a
  *(.vectors)
  .vectors       0x00000000       0x54 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -738,148 +784,92 @@ END GROUP
                 0x0000009c                __vector_20
                 0x000000a0                . = ALIGN (0x2)
  *(.text.*)
- .text.main     0x000000a0       0x28 APP/Main.o
+ .text.main     0x000000a0       0x1c APP/Main.o
                 0x000000a0                main
  .text.enu_GenerateFrame
-                0x000000c8       0xe0 HAL/Nokia5110/Nokia5110_Program.o
+                0x000000bc       0xe0 HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_ConvertCoordinatesToAddresses
-                0x000001a8       0x20 HAL/Nokia5110/Nokia5110_Program.o
+                0x0000019c       0x20 HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_PassByteToSPI
-                0x000001c8       0x52 HAL/Nokia5110/Nokia5110_Program.o
+                0x000001bc       0x52 HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_SendCommand
-                0x0000021a       0x2c HAL/Nokia5110/Nokia5110_Program.o
+                0x0000020e       0x2c HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_SendData
-                0x00000246       0x18 HAL/Nokia5110/Nokia5110_Program.o
+                0x0000023a       0x18 HAL/Nokia5110/Nokia5110_Program.o
  .text.enu_DrawPixel
-                0x0000025e       0xa0 HAL/Nokia5110/Nokia5110_Program.o
- .text.enu_DrawFillRectangle
-                0x000002fe       0xce HAL/Nokia5110/Nokia5110_Program.o
- .text.enu_DrawASCII
-                0x000003cc       0x7e HAL/Nokia5110/Nokia5110_Program.o
+                0x00000252       0xa0 HAL/Nokia5110/Nokia5110_Program.o
+ .text.enu_CopyPixelByCooridnates
+                0x000002f2       0xac HAL/Nokia5110/Nokia5110_Program.o
  .text.NOKIA5110_enu_Initialization
-                0x0000044a      0x114 HAL/Nokia5110/Nokia5110_Program.o
-                0x0000044a                NOKIA5110_enu_Initialization
- .text.NOKIA5110_enu_DrawNumber
-                0x0000055e      0x23a HAL/Nokia5110/Nokia5110_Program.o
-                0x0000055e                NOKIA5110_enu_DrawNumber
+                0x0000039e      0x114 HAL/Nokia5110/Nokia5110_Program.o
+                0x0000039e                NOKIA5110_enu_Initialization
+ .text.NOKIA5110_enu_DrawPixel
+                0x000004b2        0x6 HAL/Nokia5110/Nokia5110_Program.o
+                0x000004b2                NOKIA5110_enu_DrawPixel
+ .text.NOKIA5110_enu_CopyPixelByCooridnates
+                0x000004b8        0x6 HAL/Nokia5110/Nokia5110_Program.o
+                0x000004b8                NOKIA5110_enu_CopyPixelByCooridnates
  .text.DIO_enu_SetPinDiretion
-                0x00000798       0xf4 MCAL/DIO/DIO_Program.o
-                0x00000798                DIO_enu_SetPinDiretion
+                0x000004be       0xf4 MCAL/DIO/DIO_Program.o
+                0x000004be                DIO_enu_SetPinDiretion
  .text.DIO_enu_SetPinState
-                0x0000088c       0xf4 MCAL/DIO/DIO_Program.o
-                0x0000088c                DIO_enu_SetPinState
+                0x000005b2       0xf4 MCAL/DIO/DIO_Program.o
+                0x000005b2                DIO_enu_SetPinState
  .text.DIO_enu_SetPinValue
-                0x00000980      0x10c MCAL/DIO/DIO_Program.o
-                0x00000980                DIO_enu_SetPinValue
+                0x000006a6      0x10c MCAL/DIO/DIO_Program.o
+                0x000006a6                DIO_enu_SetPinValue
  .text.__vector_1
-                0x00000a8c       0x5a MCAL/EXTI/EXTI_Program.o
-                0x00000a8c                __vector_1
+                0x000007b2       0x5a MCAL/EXTI/EXTI_Program.o
+                0x000007b2                __vector_1
  .text.__vector_2
-                0x00000ae6       0x5a MCAL/EXTI/EXTI_Program.o
-                0x00000ae6                __vector_2
+                0x0000080c       0x5a MCAL/EXTI/EXTI_Program.o
+                0x0000080c                __vector_2
  .text.__vector_3
-                0x00000b40       0x56 MCAL/EXTI/EXTI_Program.o
-                0x00000b40                __vector_3
+                0x00000866       0x56 MCAL/EXTI/EXTI_Program.o
+                0x00000866                __vector_3
  .text.SPI_enu_Initialization
-                0x00000b96       0x3a MCAL/SPI/SPI_Program.o
-                0x00000b96                SPI_enu_Initialization
+                0x000008bc       0x3a MCAL/SPI/SPI_Program.o
+                0x000008bc                SPI_enu_Initialization
  .text.SPI_enu_MasterSend
-                0x00000bd0       0x2c MCAL/SPI/SPI_Program.o
-                0x00000bd0                SPI_enu_MasterSend
+                0x000008f6       0x2c MCAL/SPI/SPI_Program.o
+                0x000008f6                SPI_enu_MasterSend
  .text.SPI_enu_GetCommState
-                0x00000bfc       0x14 MCAL/SPI/SPI_Program.o
-                0x00000bfc                SPI_enu_GetCommState
+                0x00000922       0x14 MCAL/SPI/SPI_Program.o
+                0x00000922                SPI_enu_GetCommState
  .text.__vector_12
-                0x00000c10       0x1a MCAL/SPI/SPI_Program.o
-                0x00000c10                __vector_12
+                0x00000936       0x1a MCAL/SPI/SPI_Program.o
+                0x00000936                __vector_12
  .text.__vector_6
-                0x00000c2a       0x5a MCAL/Timer1/Timer1_Program.o
-                0x00000c2a                __vector_6
+                0x00000950       0x5a MCAL/Timer1/Timer1_Program.o
+                0x00000950                __vector_6
  .text.__vector_7
-                0x00000c84       0x5a MCAL/Timer1/Timer1_Program.o
-                0x00000c84                __vector_7
+                0x000009aa       0x5a MCAL/Timer1/Timer1_Program.o
+                0x000009aa                __vector_7
  .text.__vector_8
-                0x00000cde       0x5a MCAL/Timer1/Timer1_Program.o
-                0x00000cde                __vector_8
+                0x00000a04       0x5a MCAL/Timer1/Timer1_Program.o
+                0x00000a04                __vector_8
  .text.__vector_9
-                0x00000d38       0x5a MCAL/Timer1/Timer1_Program.o
-                0x00000d38                __vector_9
+                0x00000a5e       0x5a MCAL/Timer1/Timer1_Program.o
+                0x00000a5e                __vector_9
  .text.__vector_4
-                0x00000d92       0x18 MCAL/Timer/Timer_Program.o
-                0x00000d92                __vector_4
+                0x00000ab8       0x18 MCAL/Timer/Timer_Program.o
+                0x00000ab8                __vector_4
  .text.__vector_5
-                0x00000daa       0x18 MCAL/Timer/Timer_Program.o
-                0x00000daa                __vector_5
+                0x00000ad0       0x18 MCAL/Timer/Timer_Program.o
+                0x00000ad0                __vector_5
  .text.__vector_10
-                0x00000dc2       0x18 MCAL/Timer/Timer_Program.o
-                0x00000dc2                __vector_10
+                0x00000ae8       0x18 MCAL/Timer/Timer_Program.o
+                0x00000ae8                __vector_10
  .text.__vector_11
-                0x00000dda       0x5a MCAL/Timer/Timer_Program.o
-                0x00000dda                __vector_11
- .text.avr-libc.fplib
-                0x00000e34        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3.o)
-                0x00000e34                __subsf3
-                0x00000e36                __addsf3
- .text.avr-libc.fplib
-                0x00000e42       0xcc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(addsf3x.o)
-                0x00000e64                __addsf3x
- .text.avr-libc.fplib
-                0x00000f0e        0xa c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(cmpsf2.o)
-                0x00000f0e                __nesf2
-                0x00000f0e                __eqsf2
-                0x00000f0e                __cmpsf2
-                0x00000f0e                __ltsf2
-                0x00000f0e                __lesf2
- .text.avr-libc.fplib
-                0x00000f18       0x5e c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fixunssfsi.o)
-                0x00000f18                __fixunssfsi
- .text.avr-libc.fplib
-                0x00000f76       0x7a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(floatsisf.o)
-                0x00000f76                __floatunsisf
-                0x00000f7a                __floatsisf
- .text.avr-libc.fplib
-                0x00000ff0       0x48 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_cmp.o)
-                0x00000ff0                __fp_cmp
- .text.avr-libc.fplib
-                0x00001038        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_inf.o)
-                0x00001038                __fp_inf
- .text.avr-libc.fplib
-                0x00001044        0x6 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_nan.o)
-                0x00001044                __fp_nan
- .text.avr-libc.fplib
-                0x0000104a        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscA.o)
-                0x0000104a                __fp_pscA
- .text.avr-libc.fplib
-                0x00001058        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_pscB.o)
-                0x00001058                __fp_pscB
- .text.avr-libc.fplib
-                0x00001066       0x22 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_round.o)
-                0x00001066                __fp_round
- .text.avr-libc.fplib
-                0x00001088       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_split3.o)
-                0x00001088                __fp_split3
-                0x00001098                __fp_splitA
- .text.avr-libc.fplib
-                0x000010cc        0xe c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(fp_zero.o)
-                0x000010cc                __fp_zero
-                0x000010ce                __fp_szero
- .text.avr-libc.fplib
-                0x000010da        0x8 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3.o)
-                0x000010da                __mulsf3
- .text.avr-libc.fplib
-                0x000010e2       0xd2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5\libm.a(mulsf3x.o)
-                0x00001100                __mulsf3x
-                0x00001106                __mulsf3_pse
- .text.libgcc.div
-                0x000011b4       0x44 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_udivmodsi4.o)
-                0x000011b4                __udivmodsi4
- .text.libgcc   0x000011f8        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
-                0x000011f8                __tablejump2__
-                0x00001204                . = ALIGN (0x2)
+                0x00000b00       0x5a MCAL/Timer/Timer_Program.o
+                0x00000b00                __vector_11
+ .text.libgcc   0x00000b5a        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
+                0x00000b5a                __tablejump2__
+                0x00000b66                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00001204        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00001204                _exit
-                0x00001204                exit
+ .fini9         0x00000b66        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000b66                _exit
+                0x00000b66                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -898,11 +888,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00001204        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000b66        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00001208                _etext = .
+                0x00000b6a                _etext = .
 
-.data           0x00800060      0x50a load address 0x00001208
+.data           0x00800060        0xa load address 0x00000b6a
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -912,45 +902,43 @@ END GROUP
  *(.gnu.linkonce.d*)
  *(.rodata)
  *(.rodata*)
- .rodata.LOC_u8_ASCII
-                0x00800069      0x500 HAL/Nokia5110/Nokia5110_Program.o
  *(.gnu.linkonce.r*)
-                0x0080056a                . = ALIGN (0x2)
- *fill*         0x00800569        0x1 
-                0x0080056a                _edata = .
-                0x0080056a                PROVIDE (__data_end, .)
+                0x0080006a                . = ALIGN (0x2)
+ *fill*         0x00800069        0x1 
+                0x0080006a                _edata = .
+                0x0080006a                PROVIDE (__data_end, .)
 
-.bss            0x0080056a      0x235
-                0x0080056a                PROVIDE (__bss_start, .)
+.bss            0x0080006a      0x235
+                0x0080006a                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.LOC_au8_BufferArray
-                0x0080056a      0x1f8 HAL/Nokia5110/Nokia5110_Program.o
+                0x0080006a      0x1f8 HAL/Nokia5110/Nokia5110_Program.o
  .bss.apvid_ISRParameters
-                0x00800762        0x6 MCAL/EXTI/EXTI_Program.o
+                0x00800262        0x6 MCAL/EXTI/EXTI_Program.o
  .bss.pfun_ISRPointers
-                0x00800768        0x6 MCAL/EXTI/EXTI_Program.o
+                0x00800268        0x6 MCAL/EXTI/EXTI_Program.o
  .bss.LOC_u8_SPIState
-                0x0080076e        0x1 MCAL/SPI/SPI_Program.o
-                0x0080076e                LOC_u8_SPIState
+                0x0080026e        0x1 MCAL/SPI/SPI_Program.o
+                0x0080026e                LOC_u8_SPIState
  .bss.LOC_apvid_IntServiceRoutinesParameters
-                0x0080076f        0x8 MCAL/Timer1/Timer1_Program.o
+                0x0080026f        0x8 MCAL/Timer1/Timer1_Program.o
  .bss.LOC_apfun_IntServiceRoutinesFunctions
-                0x00800777        0x8 MCAL/Timer1/Timer1_Program.o
+                0x00800277        0x8 MCAL/Timer1/Timer1_Program.o
  .bss.apvid_ISRParameters
-                0x0080077f       0x10 MCAL/Timer/Timer_Program.o
+                0x0080027f       0x10 MCAL/Timer/Timer_Program.o
  .bss.apfun_ISRpointers
-                0x0080078f       0x10 MCAL/Timer/Timer_Program.o
+                0x0080028f       0x10 MCAL/Timer/Timer_Program.o
  *(COMMON)
-                0x0080079f                PROVIDE (__bss_end, .)
-                0x00001208                __data_load_start = LOADADDR (.data)
-                0x00001712                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0080029f                PROVIDE (__bss_end, .)
+                0x00000b6a                __data_load_start = LOADADDR (.data)
+                0x00000b74                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080079f        0x0
+.noinit         0x0080029f        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080079f                _end = .
+                0x0080029f                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -1022,102 +1010,102 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x3b8
+.debug_aranges  0x00000000      0x3e8
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x20 APP/Main.o
  .debug_aranges
                 0x00000020       0x18 HAL/Nokia5110/Nokia5110_Config.o
  .debug_aranges
-                0x00000038      0x100 HAL/Nokia5110/Nokia5110_Program.o
+                0x00000038      0x130 HAL/Nokia5110/Nokia5110_Program.o
  .debug_aranges
-                0x00000138       0x48 MCAL/DIO/DIO_Program.o
+                0x00000168       0x48 MCAL/DIO/DIO_Program.o
  .debug_aranges
-                0x00000180       0x78 MCAL/EXTI/EXTI_Program.o
+                0x000001b0       0x78 MCAL/EXTI/EXTI_Program.o
  .debug_aranges
-                0x000001f8       0x60 MCAL/SPI/SPI_Program.o
+                0x00000228       0x60 MCAL/SPI/SPI_Program.o
  .debug_aranges
-                0x00000258       0x88 MCAL/Timer1/Timer1_Program.o
+                0x00000288       0x88 MCAL/Timer1/Timer1_Program.o
  .debug_aranges
-                0x000002e0       0xd8 MCAL/Timer/Timer_Program.o
+                0x00000310       0xd8 MCAL/Timer/Timer_Program.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x3a60
+.debug_info     0x00000000     0x3fcb
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_info    0x000004e6      0x128 APP/Main.o
- .debug_info    0x0000060e      0x120 HAL/Nokia5110/Nokia5110_Config.o
- .debug_info    0x0000072e     0x199d HAL/Nokia5110/Nokia5110_Program.o
- .debug_info    0x000020cb      0x293 MCAL/DIO/DIO_Program.o
- .debug_info    0x0000235e      0x4d5 MCAL/EXTI/EXTI_Program.o
- .debug_info    0x00002833      0x371 MCAL/SPI/SPI_Program.o
- .debug_info    0x00002ba4      0x498 MCAL/Timer1/Timer1_Program.o
- .debug_info    0x0000303c      0xa24 MCAL/Timer/Timer_Program.o
+ .debug_info    0x000004e6      0x120 APP/Main.o
+ .debug_info    0x00000606      0x120 HAL/Nokia5110/Nokia5110_Config.o
+ .debug_info    0x00000726     0x1f10 HAL/Nokia5110/Nokia5110_Program.o
+ .debug_info    0x00002636      0x293 MCAL/DIO/DIO_Program.o
+ .debug_info    0x000028c9      0x4d5 MCAL/EXTI/EXTI_Program.o
+ .debug_info    0x00002d9e      0x371 MCAL/SPI/SPI_Program.o
+ .debug_info    0x0000310f      0x498 MCAL/Timer1/Timer1_Program.o
+ .debug_info    0x000035a7      0xa24 MCAL/Timer/Timer_Program.o
 
-.debug_abbrev   0x00000000     0x103b
+.debug_abbrev   0x00000000     0x1057
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x4a3 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_abbrev  0x000004a3       0x8a APP/Main.o
- .debug_abbrev  0x0000052d       0x71 HAL/Nokia5110/Nokia5110_Config.o
- .debug_abbrev  0x0000059e      0x343 HAL/Nokia5110/Nokia5110_Program.o
- .debug_abbrev  0x000008e1       0xb4 MCAL/DIO/DIO_Program.o
- .debug_abbrev  0x00000995      0x1f0 MCAL/EXTI/EXTI_Program.o
- .debug_abbrev  0x00000b85      0x13b MCAL/SPI/SPI_Program.o
- .debug_abbrev  0x00000cc0      0x14d MCAL/Timer1/Timer1_Program.o
- .debug_abbrev  0x00000e0d      0x22e MCAL/Timer/Timer_Program.o
+ .debug_abbrev  0x000004a3       0xa6 APP/Main.o
+ .debug_abbrev  0x00000549       0x71 HAL/Nokia5110/Nokia5110_Config.o
+ .debug_abbrev  0x000005ba      0x343 HAL/Nokia5110/Nokia5110_Program.o
+ .debug_abbrev  0x000008fd       0xb4 MCAL/DIO/DIO_Program.o
+ .debug_abbrev  0x000009b1      0x1f0 MCAL/EXTI/EXTI_Program.o
+ .debug_abbrev  0x00000ba1      0x13b MCAL/SPI/SPI_Program.o
+ .debug_abbrev  0x00000cdc      0x14d MCAL/Timer1/Timer1_Program.o
+ .debug_abbrev  0x00000e29      0x22e MCAL/Timer/Timer_Program.o
 
-.debug_line     0x00000000     0x2934
+.debug_line     0x00000000     0x2bc4
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x116 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_line    0x00000116       0x7c APP/Main.o
- .debug_line    0x00000192       0x7b HAL/Nokia5110/Nokia5110_Config.o
- .debug_line    0x0000020d      0xd34 HAL/Nokia5110/Nokia5110_Program.o
- .debug_line    0x00000f41      0x395 MCAL/DIO/DIO_Program.o
- .debug_line    0x000012d6      0x447 MCAL/EXTI/EXTI_Program.o
- .debug_line    0x0000171d      0x274 MCAL/SPI/SPI_Program.o
- .debug_line    0x00001991      0x423 MCAL/Timer1/Timer1_Program.o
- .debug_line    0x00001db4      0xb80 MCAL/Timer/Timer_Program.o
+ .debug_line    0x00000116       0xa2 APP/Main.o
+ .debug_line    0x000001b8       0x7b HAL/Nokia5110/Nokia5110_Config.o
+ .debug_line    0x00000233      0xf9e HAL/Nokia5110/Nokia5110_Program.o
+ .debug_line    0x000011d1      0x395 MCAL/DIO/DIO_Program.o
+ .debug_line    0x00001566      0x447 MCAL/EXTI/EXTI_Program.o
+ .debug_line    0x000019ad      0x274 MCAL/SPI/SPI_Program.o
+ .debug_line    0x00001c21      0x423 MCAL/Timer1/Timer1_Program.o
+ .debug_line    0x00002044      0xb80 MCAL/Timer/Timer_Program.o
 
-.debug_frame    0x00000000      0xb18
+.debug_frame    0x00000000      0xc18
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 APP/Main.o
- .debug_frame   0x00000024      0x3d0 HAL/Nokia5110/Nokia5110_Program.o
- .debug_frame   0x000003f4       0x74 MCAL/DIO/DIO_Program.o
- .debug_frame   0x00000468      0x1bc MCAL/EXTI/EXTI_Program.o
- .debug_frame   0x00000624       0xb0 MCAL/SPI/SPI_Program.o
- .debug_frame   0x000006d4      0x214 MCAL/Timer1/Timer1_Program.o
- .debug_frame   0x000008e8      0x230 MCAL/Timer/Timer_Program.o
+ .debug_frame   0x00000024      0x4d0 HAL/Nokia5110/Nokia5110_Program.o
+ .debug_frame   0x000004f4       0x74 MCAL/DIO/DIO_Program.o
+ .debug_frame   0x00000568      0x1bc MCAL/EXTI/EXTI_Program.o
+ .debug_frame   0x00000724       0xb0 MCAL/SPI/SPI_Program.o
+ .debug_frame   0x000007d4      0x214 MCAL/Timer1/Timer1_Program.o
+ .debug_frame   0x000009e8      0x230 MCAL/Timer/Timer_Program.o
 
-.debug_str      0x00000000     0x1810
+.debug_str      0x00000000     0x1967
  *(.debug_str)
  .debug_str     0x00000000      0x196 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega32/avr5/crtatmega32.o
- .debug_str     0x00000196      0x1c1 APP/Main.o
-                                0x1fc (size before relaxing)
- .debug_str     0x00000357       0xa1 HAL/Nokia5110/Nokia5110_Config.o
+ .debug_str     0x00000196      0x1e5 APP/Main.o
+                                0x220 (size before relaxing)
+ .debug_str     0x0000037b       0xa1 HAL/Nokia5110/Nokia5110_Config.o
                                 0x275 (size before relaxing)
- .debug_str     0x000003f8      0x80f HAL/Nokia5110/Nokia5110_Program.o
-                                0xb1d (size before relaxing)
- .debug_str     0x00000c07       0xc8 MCAL/DIO/DIO_Program.o
+ .debug_str     0x0000041c      0x942 HAL/Nokia5110/Nokia5110_Program.o
+                                0xcb6 (size before relaxing)
+ .debug_str     0x00000d5e       0xc8 MCAL/DIO/DIO_Program.o
                                 0x302 (size before relaxing)
- .debug_str     0x00000ccf      0x1c4 MCAL/EXTI/EXTI_Program.o
+ .debug_str     0x00000e26      0x1c4 MCAL/EXTI/EXTI_Program.o
                                 0x3da (size before relaxing)
- .debug_str     0x00000e93      0x1d5 MCAL/SPI/SPI_Program.o
+ .debug_str     0x00000fea      0x1d5 MCAL/SPI/SPI_Program.o
                                 0x447 (size before relaxing)
- .debug_str     0x00001068      0x356 MCAL/Timer1/Timer1_Program.o
+ .debug_str     0x000011bf      0x356 MCAL/Timer1/Timer1_Program.o
                                 0x570 (size before relaxing)
- .debug_str     0x000013be      0x452 MCAL/Timer/Timer_Program.o
+ .debug_str     0x00001515      0x452 MCAL/Timer/Timer_Program.o
                                 0x77a (size before relaxing)
 
-.debug_loc      0x00000000     0x4ef3
+.debug_loc      0x00000000     0x5b4b
  *(.debug_loc)
- .debug_loc     0x00000000     0x214b HAL/Nokia5110/Nokia5110_Program.o
- .debug_loc     0x0000214b      0x4f6 MCAL/DIO/DIO_Program.o
- .debug_loc     0x00002641      0x9ea MCAL/EXTI/EXTI_Program.o
- .debug_loc     0x0000302b      0x2ed MCAL/SPI/SPI_Program.o
- .debug_loc     0x00003318      0x84e MCAL/Timer1/Timer1_Program.o
- .debug_loc     0x00003b66     0x138d MCAL/Timer/Timer_Program.o
+ .debug_loc     0x00000000     0x2da3 HAL/Nokia5110/Nokia5110_Program.o
+ .debug_loc     0x00002da3      0x4f6 MCAL/DIO/DIO_Program.o
+ .debug_loc     0x00003299      0x9ea MCAL/EXTI/EXTI_Program.o
+ .debug_loc     0x00003c83      0x2ed MCAL/SPI/SPI_Program.o
+ .debug_loc     0x00003f70      0x84e MCAL/Timer1/Timer1_Program.o
+ .debug_loc     0x000047be     0x138d MCAL/Timer/Timer_Program.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -1137,15 +1125,15 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x3e0
+.debug_ranges   0x00000000      0x410
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x10 APP/Main.o
- .debug_ranges  0x00000010      0x160 HAL/Nokia5110/Nokia5110_Program.o
- .debug_ranges  0x00000170       0x38 MCAL/DIO/DIO_Program.o
- .debug_ranges  0x000001a8       0x68 MCAL/EXTI/EXTI_Program.o
- .debug_ranges  0x00000210       0x50 MCAL/SPI/SPI_Program.o
- .debug_ranges  0x00000260       0x78 MCAL/Timer1/Timer1_Program.o
- .debug_ranges  0x000002d8      0x108 MCAL/Timer/Timer_Program.o
+ .debug_ranges  0x00000010      0x190 HAL/Nokia5110/Nokia5110_Program.o
+ .debug_ranges  0x000001a0       0x38 MCAL/DIO/DIO_Program.o
+ .debug_ranges  0x000001d8       0x68 MCAL/EXTI/EXTI_Program.o
+ .debug_ranges  0x00000240       0x50 MCAL/SPI/SPI_Program.o
+ .debug_ranges  0x00000290       0x78 MCAL/Timer1/Timer1_Program.o
+ .debug_ranges  0x00000308      0x108 MCAL/Timer/Timer_Program.o
 
 .debug_macro
  *(.debug_macro)
