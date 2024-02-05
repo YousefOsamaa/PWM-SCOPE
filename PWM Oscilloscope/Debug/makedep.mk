@@ -12,7 +12,7 @@ HAL\Nokia5110\Nokia5110_Config.c
 
 HAL\Nokia5110\Nokia5110_Program.c
 
-main.c
+LIB\General\General.c
 
 MCAL\DIO\DIO_Program.c
 

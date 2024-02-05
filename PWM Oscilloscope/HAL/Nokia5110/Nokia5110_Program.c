@@ -1,5 +1,6 @@
 #include "../../LIB/ErrorStates.h"
 #include "../../LIB/STD.h"
+#include "../../LIB/General/General.h"
 #include <util/delay.h>
 
 #include "../../MCAL/DIO/DIO_Interface.h"
@@ -413,6 +414,7 @@ extern ErrorState_t NOKIA5110_enu_DrawPattern()
 
     return Local_u8_ErrorFlag;
 }
+
 /**
  * @brief Draws a line using Bresenham's Algorithm using only integer arithmetic for fast operation 
  * 
@@ -422,31 +424,71 @@ extern ErrorState_t NOKIA5110_enu_DrawPattern()
  * @param Copy_u8_Xend  ending x - coordinate
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend)
-{
+extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour){
     u8 Local_u8_ErrorFlag = ES_NOK;
-    u8 Local_u8_dx = 0; //delta x 
-    u8 Local_u8_dy = 0; //delta y 
-    u8 Local_u8_D = 0; //error 
+    s16 Local_s16_dx = 0; //delta x 
+    s16 Local_s16_dy = 0; //delta y 
+    s16 Local_s16_D = 0; //error 
     u8 Local_u8_x = 0, Local_u8_y = 0; //Graphing counters
 
-    Local_u8_dx = Copy_u8_Xend - Copy_u8_Xstart;
-    Local_u8_dy = Copy_u8_Yend - Copy_u8_Ystart;
+    
+    if(1)
+    {
+        Local_s16_dx = Copy_u8_Xend - Copy_u8_Xstart;
+        Local_s16_dy = Copy_u8_Yend - Copy_u8_Ystart;
 
-    if(!Local_u8_dx) //if the line is horizontal
-    {
+        if(!Local_s16_dx) //if the line is vertical
+        {
+            enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, (Copy_u8_Yend - Copy_u8_Ystart), Copy_u8_Colour);
+        }
+        else if(!Local_s16_dy)//if the line is horizontal
+        {
+            enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_Xstart, (Copy_u8_Xend - Copy_u8_Xstart), Copy_u8_Colour);        
+        }
+        else //line has a slope
+        {
+            enu_DrawLine(Copy_u8_Ystart, Copy_u8_Xstart, Copy_u8_Yend, Copy_u8_Xend, Copy_u8_Colour);
+        }
     }
-    else if(!Local_u8_dy)//if the line is vertical
+    else
     {
-        // Gener
-        // enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, );
-    }
-    else //line has a slope
-    {
-        enu_DrawLine(Copy_u8_Ystart, Copy_u8_Xstart, Copy_u8_Yend, Copy_u8_Xend);
+        Local_u8_ErrorFlag  = ES_OUT_OF_RANGE;
     }
 }
 
+/**
+ * @brief Draws a vertical line given a starting point and a height
+ * 
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_xStart x - coordinate of the starting point
+ * @param Copy_u8_Height Line height
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    Local_u8_ErrorFlag = enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Height, Copy_u8_Colour);
+    
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Draws a vertical line given a starting point and a height
+ * 
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_xStart x - coordinate of the starting point
+ * @param Copy_u8_Length Line length
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    Local_u8_ErrorFlag = enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Length, Copy_u8_Colour);
+
+    return Local_u8_ErrorFlag;
+}
 
 //Local Functions
 /**
@@ -894,36 +936,170 @@ static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, 
  * @param Copy_u8_Xend  ending x - coordinate
  * @return ErrorState_t 
  */
-static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend)
+static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
-    u8 Local_u8_dx = 0; //delta x 
-    u8 Local_u8_dy = 0; //delta y 
-    u8 Local_u8_D = 0; //error 
-    u8 Local_u8_x = 0, Local_u8_y = 0; //Graphing counters
+    
+    u16 Local_s16_dx = 0; //delta x 
+    u16 Local_s16_dy = 0; //delta y 
+    u16 Local_s16_D = 0; //error 
+    
+    u16 Local_u8_x = 0, Local_u8_y = 0; //Graphing counters
+    
+    u8 Local_u8_SwapAxis = False; //Swapping axis condition
+    u8 Local_u8_Direction = 1; //Line increasing(1) in y axis or decreasing(-1)
 
-    Local_u8_dx = Copy_u8_Xend - Copy_u8_Xstart;
-    Local_u8_dy = Copy_u8_Yend - Copy_u8_Ystart;
 
-    Local_u8_D = 2*Local_u8_dy - Local_u8_dx;
+    //for the algorithm to work delta x must be greater than delta y
+    Local_s16_dy = Copy_u8_Yend - Copy_u8_Ystart;
+    Local_s16_dx = Copy_u8_Xend - Copy_u8_Xstart;
+    General_enu_AbsoluteIntegers(&Local_s16_dy);
+    General_enu_AbsoluteIntegers(&Local_s16_dx);
+    Local_u8_SwapAxis = Local_s16_dy > Local_s16_dx; 
+    
+    if(Local_u8_SwapAxis)
+    {
+        //Swaping Start Points
+        Copy_u8_Xstart ^= Copy_u8_Ystart;
+        Copy_u8_Ystart ^= Copy_u8_Xstart;
+        Copy_u8_Xstart ^= Copy_u8_Ystart;
+
+        //Swaping End Points
+        Copy_u8_Xend ^= Copy_u8_Yend;
+        Copy_u8_Yend ^= Copy_u8_Xend;
+        Copy_u8_Xend ^= Copy_u8_Yend;
+    }
+
+    if(Copy_u8_Xstart > Copy_u8_Xend) //The line must increase in the x direction 
+    {
+        //Swappin Start Points with End points
+        Copy_u8_Xstart ^= Copy_u8_Xend;
+        Copy_u8_Xend ^= Copy_u8_Xstart;
+        Copy_u8_Xstart ^= Copy_u8_Xend;
+
+        Copy_u8_Ystart ^= Copy_u8_Yend;
+        Copy_u8_Yend ^= Copy_u8_Ystart;
+        Copy_u8_Ystart ^= Copy_u8_Yend;
+
+    }   
+    
+    Local_s16_dx = Copy_u8_Xend - Copy_u8_Xstart; //Change in x 
+    
+    Local_s16_dy = Copy_u8_Yend - Copy_u8_Ystart;
+    General_enu_AbsoluteIntegers(&Local_s16_dy); //Change in y
+
+    Local_s16_D = Local_s16_dx / 2; //Initial guess for delta x, Deicimals ignored for fast operation
+    Local_u8_Direction = (Copy_u8_Ystart < Copy_u8_Yend)? 1: -1; //Determining direction of increase
+
     Local_u8_y = Copy_u8_Ystart; //y sarts from y0 as do x starts from x0
-
     for(Local_u8_x = Copy_u8_Xstart; Local_u8_x <= Copy_u8_Xend; Local_u8_x++)
     {
-        enu_DrawPixel(Local_u8_x, Local_u8_y, NOKIA5110_BLACK_COLOUR);
-
-        if(Local_u8_D > 0)
+        if(Local_u8_SwapAxis)
         {
-            Local_u8_dy++; //The most accurate point lies in the positive plane therefore y should e incremented
-
-            Local_u8_D -= 2*Local_u8_dy; //The most accurate point lies in the positive plane, therefore y should e incremented
-
+            //Axis are interchanged
+            enu_DrawPixel(Local_u8_x, Local_u8_y, Copy_u8_Colour);
         }
         else
         {
-            Local_u8_D +=  2*Local_u8_dy; //The most accurate point lies in the negative plane, therefore y will remain the same
+            //Axis are unchanged
+            enu_DrawPixel(Local_u8_y, Local_u8_x, Copy_u8_Colour);
+        }
+
+        Local_s16_D -= Local_s16_dy;
+        
+        if(Local_s16_D < 0) //If the new point lies within the negative plane 
+        {
+            Local_u8_y += Local_u8_Direction; //increment y according to line direction in y axis
+
+            Local_s16_D += Local_s16_dx;
         }
     }
 
+
     return Local_u8_ErrorFlag; 
+}
+
+/**
+ * @brief Draws a vertical line given a starting point and a height
+ * 
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_xStart x - coordinate of the starting point
+ * @param Copy_u8_Height Line height
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_WrapAround = False;
+    u8 Local_u8_LineEnd = 0;
+    
+    u8 Local_u8_Validation = (Copy_u8_Ystart >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ystart <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_xStart >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_xStart <= NOKIA5110_X_COORDINATE_MAX) && (Copy_u8_Colour == NOKIA5110_BLACK_COLOUR || Copy_u8_Colour == NOKIA5110_WHITE_COLOUR) && (Copy_u8_Height <= NOKIA5110_Y_COORDINATE_MAX + 1);
+    
+    if(Local_u8_Validation)
+    {
+        Local_u8_WrapAround = Copy_u8_Ystart + Copy_u8_Height > NOKIA5110_Y_COORDINATE_MAX;
+
+        Local_u8_LineEnd = Copy_u8_Ystart + Copy_u8_Height;
+        for(u8 Local_u8_y = Copy_u8_Ystart; Local_u8_y <= Local_u8_LineEnd; Local_u8_y++)
+        {
+            if(Local_u8_WrapAround && (Local_u8_y > NOKIA5110_Y_COORDINATE_MAX))
+            {
+                Local_u8_y = 0; //Starting again from the top
+                Local_u8_LineEnd -= (NOKIA5110_Y_COORDINATE_MAX + 1); //Acquiring new stopping row
+            }
+
+            enu_DrawPixel(Local_u8_y, Copy_u8_xStart, Copy_u8_Colour);
+        }    
+
+        Local_u8_ErrorFlag = ES_OK;
+    }
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Draws a vertical line given a starting point and a height
+ * 
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_xStart x - coordinate of the starting point
+ * @param Copy_u8_Length Line length
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+    u8 Local_u8_WrapAround = False;
+    u8 Local_u8_LineEnd = 0;
+    
+    u8 Local_u8_Validation = (Copy_u8_Ystart >= NOKIA5110_Y_COORDINATE_MIN && Copy_u8_Ystart <= NOKIA5110_Y_COORDINATE_MAX) && (Copy_u8_xStart >= NOKIA5110_X_COORDINATE_MIN && Copy_u8_xStart <= NOKIA5110_X_COORDINATE_MAX) && (Copy_u8_Colour == NOKIA5110_BLACK_COLOUR || Copy_u8_Colour == NOKIA5110_WHITE_COLOUR) && (Copy_u8_Length <= NOKIA5110_X_COORDINATE_MAX + 1);
+    
+    if(Local_u8_Validation)
+    {
+        Local_u8_WrapAround = Copy_u8_xStart + Copy_u8_Length > NOKIA5110_X_COORDINATE_MAX;
+
+        Local_u8_LineEnd = Copy_u8_xStart + Copy_u8_Length;
+        for(u8 Local_u8_x = Copy_u8_xStart; Local_u8_x <= Local_u8_LineEnd; Local_u8_x++)
+        {
+            if(Local_u8_WrapAround && (Local_u8_x > NOKIA5110_X_COORDINATE_MAX))
+            {
+                Local_u8_x = 0; //Starting again from the top
+                Local_u8_LineEnd -= (NOKIA5110_X_COORDINATE_MAX + 1); //Acquiring new stopping row
+            }
+
+            enu_DrawPixel(Copy_u8_Ystart, Local_u8_x, Copy_u8_Colour);
+        }    
+
+        Local_u8_ErrorFlag = ES_OK;
+    }
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
+
+    return Local_u8_ErrorFlag;
+
 }

@@ -38,6 +38,7 @@ SUBDIRS :=  \
 ../HAL/ICU \
 ../HAL/LCD \
 ../HAL/Nokia5110 \
+../LIB/General \
 ../MCAL \
 ../LIB \
 ../MCAL/DIO \
@@ -55,7 +56,7 @@ C_SRCS +=  \
 ../HAL/LCD/LCD_Program.c \
 ../HAL/Nokia5110/Nokia5110_Config.c \
 ../HAL/Nokia5110/Nokia5110_Program.c \
-../main.c \
+../LIB/General/General.c \
 ../MCAL/DIO/DIO_Program.c \
 ../MCAL/EXTI/EXTI_Config.c \
 ../MCAL/EXTI/EXTI_Program.c \
@@ -78,7 +79,7 @@ HAL/ICU/ICU_Program.o \
 HAL/LCD/LCD_Program.o \
 HAL/Nokia5110/Nokia5110_Config.o \
 HAL/Nokia5110/Nokia5110_Program.o \
-main.o \
+LIB/General/General.o \
 MCAL/DIO/DIO_Program.o \
 MCAL/EXTI/EXTI_Config.o \
 MCAL/EXTI/EXTI_Program.o \
@@ -94,7 +95,7 @@ HAL/ICU/ICU_Program.o \
 HAL/LCD/LCD_Program.o \
 HAL/Nokia5110/Nokia5110_Config.o \
 HAL/Nokia5110/Nokia5110_Program.o \
-main.o \
+LIB/General/General.o \
 MCAL/DIO/DIO_Program.o \
 MCAL/EXTI/EXTI_Config.o \
 MCAL/EXTI/EXTI_Program.o \
@@ -110,7 +111,7 @@ HAL/ICU/ICU_Program.d \
 HAL/LCD/LCD_Program.d \
 HAL/Nokia5110/Nokia5110_Config.d \
 HAL/Nokia5110/Nokia5110_Program.d \
-main.d \
+LIB/General/General.d \
 MCAL/DIO/DIO_Program.d \
 MCAL/EXTI/EXTI_Config.d \
 MCAL/EXTI/EXTI_Program.d \
@@ -126,7 +127,7 @@ HAL/ICU/ICU_Program.d \
 HAL/LCD/LCD_Program.d \
 HAL/Nokia5110/Nokia5110_Config.d \
 HAL/Nokia5110/Nokia5110_Program.d \
-main.d \
+LIB/General/General.d \
 MCAL/DIO/DIO_Program.d \
 MCAL/EXTI/EXTI_Config.d \
 MCAL/EXTI/EXTI_Program.d \
@@ -185,7 +186,7 @@ HAL/Nokia5110/Nokia5110_Program.o: ../HAL/Nokia5110/Nokia5110_Program.c
 	@echo Finished building: $<
 	
 
-./main.o: .././main.c
+LIB/General/General.o: ../LIB/General/General.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\include"  -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -mmcu=atmega32 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\gcc\dev\atmega32" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

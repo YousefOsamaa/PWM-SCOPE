@@ -165,10 +165,13 @@
     <Compile Include="LIB\ErrorStates.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="LIB\STD.h">
+    <Compile Include="LIB\General\General.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="main.c">
+    <Compile Include="LIB\General\General.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="LIB\STD.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="MCAL\DIO\DIO_Config.h">
@@ -250,6 +253,7 @@
     <Folder Include="HAL\ICU" />
     <Folder Include="HAL\LCD" />
     <Folder Include="HAL\Nokia5110" />
+    <Folder Include="LIB\General" />
     <Folder Include="MCAL" />
     <Folder Include="LIB" />
     <Folder Include="MCAL\DIO" />
