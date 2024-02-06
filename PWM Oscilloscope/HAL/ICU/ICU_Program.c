@@ -18,6 +18,7 @@ static u32 LOC_u32_PeriodCounts; //Variable to store the  period counts in it
 static u32 LOC_u32_TonCounts; //Variable to store Ton counts in it
 static u32 LOC_au32_NumberOfOverflowsArray[3];  //To sotre the number of overflows performed by ICU_TIMER_USED (Total, Falling Edge, Second Rising Edge)
 static u16 LOC_u16_Timer_PS;
+static u8 LOC_u8_NewReading = False;
 
 
 extern ErrorState_t ICU_enu_Initialization()
@@ -85,10 +86,10 @@ extern ErrorState_t ICU_enu_CalculateParameters(f32* Copy_pf32_SignalParametersA
 
         LOC_u32_TonCounts += 65536ULL*LOC_au32_NumberOfOverflowsArray[1]; //Total Number of Duty Counts
 
-        //Calculating Frequency in Hz
+        //Calculating Frequency in KHz
         if(LOC_u32_PeriodCounts != 0)
         {
-            Copy_pf32_SignalParametersArray[0] = (Local_f32_TimerFrequency/LOC_u32_PeriodCounts);
+            Copy_pf32_SignalParametersArray[0] = (Local_f32_TimerFrequency/(LOC_u32_PeriodCounts*1000UL));
         }
         else
         {

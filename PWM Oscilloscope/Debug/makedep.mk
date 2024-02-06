@@ -4,6 +4,8 @@
 
 APP\Main.c
 
+APP\PWM_Oscilloscope\PWMScope_Program.c
+
 HAL\ICU\ICU_Program.c
 
 HAL\LCD\LCD_Program.c

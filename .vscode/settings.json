@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "pwmscope_interface.h": "c"
+    }
+}

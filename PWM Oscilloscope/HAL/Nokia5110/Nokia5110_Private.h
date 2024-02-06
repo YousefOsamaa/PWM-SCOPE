@@ -100,6 +100,10 @@ typedef struct
 #define NOKIA5110_SHIFT_VERTICAL       (0)
 #define NOKIA5110_SHIFT_HORIZONTAL     (1)
 
+//Chsracter Overlapping
+#define NOKIA5110_ENABLE_OVERLAP  (0) 
+#define NOKIA5110_DISABLE_OVERLAP (1) 
+
 
 static ErrorState_t enu_PassByteToSPI(u8 Copy_u8_Byte);
 
@@ -115,15 +119,17 @@ static ErrorState_t enu_DrawPixel(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour)
 
 static ErrorState_t enu_ClearRAM();
 
-static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour);
+static ErrorState_t enu_FillRAM();
+
+static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour, u8 Copy_u8_Overlap);
 
 static ErrorState_t enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Length, u8 Copy_u8_Width, u8 Copy_u8_Colour);
 
-static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour);
+static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Thickness, u8 Copy_u8_Colour);
 
-static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour);
+static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour);
 
-static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour);
+static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour);
 
 static ErrorState_t enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
 

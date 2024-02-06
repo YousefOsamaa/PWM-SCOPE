@@ -342,6 +342,20 @@ extern ErrorState_t NOKIA5110_enu_ClearScreen()
     return Local_u8_ErrorFlag;
 }
 
+/**
+ * @brief Fills all the pixels
+ * 
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_FillScreen()
+{
+    u8 Local_u8_ErrorFlag = ES_NOK;
+
+    enu_ClearRAM();
+
+    return Local_u8_ErrorFlag;
+}
+
 //Graphical Library
 /**
  * @brief Draws a pixel at the given coordinates with the given colour
@@ -369,14 +383,14 @@ extern ErrorState_t NOKIA5110_enu_DrawPixel(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_
  * @param Copy_u8_X x-coordinate of the top left corner
  * @param Copy_u8_Colour Colour 
  * @param Copy_u8_YMagnification Magnification in the X direction 
- * @param Copy_u8_XMagnification Magnification in the Y directtion
+ * @param Copy_u8_Overlap Enable or disable overlapping  (NOKIA5110_ENABLE_OVERLAP AND NOKIA5110_DISABLE_OVERLAP) 
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawCharacter(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour)
+extern ErrorState_t NOKIA5110_enu_DrawCharacter(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour, u8 Copy_u8_Overlap)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
 
-   Local_u8_ErrorFlag = enu_DrawASCII(Copy_u8_ASCII, Copy_u8_Y, Copy_u8_X, NOKIA5110_BLACK_COLOUR);
+   Local_u8_ErrorFlag = enu_DrawASCII(Copy_u8_ASCII, Copy_u8_Y, Copy_u8_X, NOKIA5110_BLACK_COLOUR, Copy_u8_Overlap);
 
     return Local_u8_ErrorFlag;
 }
@@ -502,7 +516,7 @@ extern ErrorState_t NOKIA5110_enu_DrawNumber(f32 Copy_f32_Number, u8 Copy_u8_Yst
         Local_u8_x = Copy_u8_Xstart;
         if(Local_u8_NegativeNumberFlag)
         {
-            enu_DrawASCII('-',Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing Negative Sign
+            enu_DrawASCII('-',Local_u8_y, Local_u8_x, Copy_u8_Colour, NOKIA5110_DISABLE_OVERLAP); //Printing Negative Sign
                 
             //Incrementing to the next character
             Local_u8_x += 6; 
@@ -512,23 +526,23 @@ extern ErrorState_t NOKIA5110_enu_DrawNumber(f32 Copy_f32_Number, u8 Copy_u8_Yst
 
         for(Local_u8_Counter4 = Local_u8_Counter1; Local_u8_Counter4 >= 1; Local_u8_Counter4--)//Whole digits
         {
-            enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4 - 1], Local_u8_y, Local_u8_x, Copy_u8_Colour); 
+            enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4 - 1], Local_u8_y, Local_u8_x, Copy_u8_Colour, NOKIA5110_DISABLE_OVERLAP); 
             
             //Incrementing to the next character
             Local_u8_x += 6; 
-            
+        
         }
 
         Local_u8_x -= 1; 
         if(Local_u8_Counter2 != 0) //there are decimals
         {
-            enu_DrawASCII('.', Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing Decimal Point
+            enu_DrawASCII('.', Local_u8_y, Local_u8_x, Copy_u8_Colour, NOKIA5110_DISABLE_OVERLAP); //Printing Decimal Point
 
             Local_u8_x += 5;
 
             for(Local_u8_Counter4 = Local_u8_Counter1; Local_u8_Counter4 < Local_u8_Counter2; Local_u8_Counter4++)//Decimal Digits
             {
-                enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4], Local_u8_y, Local_u8_x, Copy_u8_Colour); //Printing whole digits
+                enu_DrawASCII(Local_au8_PrintingArray[Local_u8_Counter4], Local_u8_y, Local_u8_x, Copy_u8_Colour, NOKIA5110_DISABLE_OVERLAP); //Printing whole digits
                 
                 //Incrementing to the next character
                 Local_u8_x += 6; 
@@ -557,15 +571,18 @@ extern ErrorState_t NOKIA5110_enu_DrawPattern()
 }
 
 /**
- * @brief Draws a line using Bresenham's Algorithm using only integer arithmetic for fast operation 
+/**
+ * @brief Draws a  line given a starting point and an ending point
  * 
- * @param Copy_u8_Ystart starting y - coordinate
- * @param Copy_u8_Xstart starting x - coordinate
- * @param Copy_u8_Yend  ending y - coordinate
- * @param Copy_u8_Xend  ending x - coordinate
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_Xstart x - coordinate of the starting point
+ * @param Copy_u8_Yend y - coordinate of the ending point
+ * @param Copy_u8_Xend x - coordinate of the ending point
+ * @param Copy_u8_Thcickness Line thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour)
+extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Thickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
 
@@ -581,16 +598,17 @@ extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart,
         {
             General_enu_AbsoluteIntegers(&Local_s16_dy);
             
-            enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dy + 1, Copy_u8_Colour);
+            enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dy + 1, Copy_u8_Thickness, Copy_u8_Colour);
         }
         else if(!Local_s16_dy)//if the line is horizontal
         {   
             General_enu_AbsoluteIntegers(&Local_s16_dx);
-            enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dx + 1, Copy_u8_Colour);        
+
+            enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_Xstart, Local_s16_dx + 1, Copy_u8_Thickness, Copy_u8_Colour);        
         }
         else //line has a slope
         {
-            enu_DrawLine(Copy_u8_Ystart, Copy_u8_Xstart, Copy_u8_Yend, Copy_u8_Xend, Copy_u8_Colour);
+            enu_DrawLine(Copy_u8_Ystart, Copy_u8_Xstart, Copy_u8_Yend, Copy_u8_Xend, 1, Copy_u8_Colour);
         }
     }
     else
@@ -605,30 +623,34 @@ extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart,
  * @param Copy_u8_Ystart y - coordinate of the starting point
  * @param Copy_u8_xStart x - coordinate of the starting point
  * @param Copy_u8_Height Line height
+ * @param Copy_u8_Thcickness Line thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour)
+extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Thickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
 
-    Local_u8_ErrorFlag = enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Height, Copy_u8_Colour);
+    Local_u8_ErrorFlag = enu_DrawVerticalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Height, Copy_u8_Thickness, Copy_u8_Colour);
     
     return Local_u8_ErrorFlag;
 }
 
 /**
- * @brief Draws a vertical line given a starting point and a height
+ * @brief Draws a Horizontal line given a starting point and a length
  * 
  * @param Copy_u8_Ystart y - coordinate of the starting point
  * @param Copy_u8_xStart x - coordinate of the starting point
  * @param Copy_u8_Length Line length
+ * @param Copy_u8_Thcickness Line thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour)
+extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
 
-    Local_u8_ErrorFlag = enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Length, Copy_u8_Colour);
+    Local_u8_ErrorFlag = enu_DrawHorizontalLine(Copy_u8_Ystart, Copy_u8_xStart, Copy_u8_Length, Copy_u8_Thcickness, Copy_u8_Colour);
 
     return Local_u8_ErrorFlag;
 }
@@ -684,6 +706,43 @@ extern ErrorState_t NOKIA5110_enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u
     u8 Local_u8_ErrorFlag = ES_NOK;
 
     Local_u8_ErrorFlag = enu_CopyPixelByCooridnates(Copy_u8_Yoriginal, Copy_u8_Xoriginal, Copy_u8_Ycopied, Copy_u8_Xcopied);
+
+    return Local_u8_ErrorFlag;
+}
+
+/**
+ * @brief Draws a string giving a startnig point
+ * 
+ * @param Copy_pu8_StringArray String to be drawn
+ * @param Copy_u8_Ystart y - coordinate of the starting point
+ * @param Copy_u8_Xstart x - coordinate of the starting point
+ * @param Copy_u8_Colour Colour
+ * @return ErrorState_t 
+ */
+extern ErrorState_t NOKIA5110_enu_DrawString(const u8* Copy_pu8_StringArray, u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Colour)
+{
+    u8 Local_u8_ErrorFlag = ES_NOK, Local_u8_y = 0, Local_u8_x = 0;
+    u8* Local_pu8_PrintingString = Copy_pu8_StringArray;
+
+    if(Copy_pu8_StringArray)
+    {
+        Local_u8_y = Copy_u8_Ystart;
+        Local_u8_x =Copy_u8_Xstart;
+        while(*Local_pu8_PrintingString)
+        {
+            enu_DrawASCII(*Local_pu8_PrintingString, Local_u8_y, Local_u8_x, Copy_u8_Colour, NOKIA5110_DISABLE_OVERLAP);
+
+            Local_u8_x += 6;
+
+            Local_pu8_PrintingString++;
+        }
+        
+        Local_u8_ErrorFlag = ES_OK;
+    }
+    else
+    {
+        Local_u8_ErrorFlag = ES_OUT_OF_RANGE;
+    }
 
     return Local_u8_ErrorFlag;
 }
@@ -1012,13 +1071,43 @@ static ErrorState_t enu_ClearRAM()
     {
         for(u8 j = 0; j <= 83; j++)
         {
-            LOC_au8_BufferArray[i][j] = 0x00; //Clearing Buffer element
+            LOC_au8_BufferArray[i][j] = 0xFF; //Clearing Buffer element
 
-            enu_SendData(0x00); //Clearing RAM
+            enu_SendData(0xFF); //Filling RAM
         }
     }
 
     return Local_ErrorFlag;
+}
+
+/**
+ * @brief Fills RAM and LCD buffer
+ * 
+ * @return ErrorState_t 
+ */
+static ErrorState_t enu_FillRAM()
+{
+        u8 Local_ErrorFlag = ES_NOK;
+
+    //Setting Address Counter (AC) at (0,0)
+    Mod_str_Nokia5110Configurations.Y_Address = 0;
+    Mod_str_Nokia5110Configurations.X_Address = 0;
+
+    enu_SendCommand(NOKIA5110_SET_Y_ADDRESS);
+    enu_SendCommand(NOKIA5110_SET_X_ADDRESS);
+
+    for(u8 i = 0; i <= 5; i++)
+    {
+        for(u8 j = 0; j <= 83; j++)
+        {
+            LOC_au8_BufferArray[i][j] = 0xFF; //Filling Buffer element
+
+            enu_SendData(0xFF); //Filling RAM
+        }
+    }
+
+    return Local_ErrorFlag;
+
 }
 
 /**
@@ -1088,18 +1177,22 @@ static ErrorState_t enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8
  * @param Copy_u8_Y y-coordinate of the ' ' left corner
  * @param Copy_u8_X y-coordinate of the ' ' left corner
  * @param Copy_u8_Colour Colour
+ * @param Copy_u8_Overlap Enable or disable overlapping  (NOKIA5110_ENABLE_OVERLAP AND NOKIA5110_DISABLE_OVERLAP) 
+ 
  * @return ErrorState_t 
  */
-static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour)
+static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour, u8 Copy_u8_Overlap)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
     u8 Local_u8_Line  = 0;
 
     if(1)
     {   
-        //Erasing a 5 x 8 filled rectangle to draw the character on  
-        enu_DrawFillRectangle(Copy_u8_Y, Copy_u8_X, 5, 8, NOKIA5110_WHITE_COLOUR);
-
+        if (Copy_u8_Overlap == NOKIA5110_DISABLE_OVERLAP) //If overlapp is disabled erase the 8 x 5 character space
+        {
+            enu_DrawFillRectangle(Copy_u8_Y, Copy_u8_X, 5, 8, NOKIA5110_WHITE_COLOUR);
+        }
+        
         //Drawing the 5 x 7 Character
         for (u8 i = 0; i < 5; i++) 
         { 
@@ -1133,9 +1226,11 @@ static ErrorState_t enu_DrawASCII(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, 
  * @param Copy_u8_Xstart starting x - coordinate
  * @param Copy_u8_Yend  ending y - coordinate
  * @param Copy_u8_Xend  ending x - coordinate
+ * @param Copy_u8_Thickness Line Thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour)
+static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Thickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
     
@@ -1224,9 +1319,11 @@ static ErrorState_t enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u
  * @param Copy_u8_Ystart y - coordinate of the starting point
  * @param Copy_u8_xStart x - coordinate of the starting point
  * @param Copy_u8_Height Line height
+ * @param Copy_u8_Thcickness Line thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour)
+static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
     u8 Local_u8_WrapAround = False;
@@ -1236,19 +1333,22 @@ static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u
     
     if(Local_u8_Validation)
     {
-        Local_u8_WrapAround = Copy_u8_Ystart + Copy_u8_Height > NOKIA5110_Y_COORDINATE_MAX;
-
-        Local_u8_LineEnd = Copy_u8_Ystart + Copy_u8_Height;
-        for(u8 Local_u8_y = Copy_u8_Ystart; Local_u8_y <= Local_u8_LineEnd; Local_u8_y++)
+        for(u8 Local_u8_x = Copy_u8_xStart; Local_u8_x < (Copy_u8_xStart + Copy_u8_Thcickness); Local_u8_x++)
         {
-            if(Local_u8_WrapAround && (Local_u8_y > NOKIA5110_Y_COORDINATE_MAX))
-            {
-                Local_u8_y = 0; //Starting again from the top
-                Local_u8_LineEnd -= (NOKIA5110_Y_COORDINATE_MAX + 1); //Acquiring new stopping row
-            }
+            Local_u8_WrapAround = (Copy_u8_Ystart + Copy_u8_Height) > NOKIA5110_Y_COORDINATE_MAX;
 
-            enu_DrawPixel(Local_u8_y, Copy_u8_xStart, Copy_u8_Colour);
-        }    
+            Local_u8_LineEnd = Copy_u8_Ystart + Copy_u8_Height;
+            for(u8 Local_u8_y = Copy_u8_Ystart; Local_u8_y <= Local_u8_LineEnd; Local_u8_y++)
+            {
+                if(Local_u8_WrapAround && (Local_u8_y > NOKIA5110_Y_COORDINATE_MAX))
+                {
+                    Local_u8_y = 0; //Starting again from the top
+                    Local_u8_LineEnd -= (NOKIA5110_Y_COORDINATE_MAX + 1); //Acquiring new stopping row
+                }
+
+                enu_DrawPixel(Local_u8_y, Local_u8_x, Copy_u8_Colour);
+            }    
+        }
 
         Local_u8_ErrorFlag = ES_OK;
     }
@@ -1261,14 +1361,16 @@ static ErrorState_t enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u
 }
 
 /**
- * @brief Draws a vertical line given a starting point and a height
+ * @brief Draws a Horizontal line given a starting point and a length
  * 
  * @param Copy_u8_Ystart y - coordinate of the starting point
  * @param Copy_u8_xStart x - coordinate of the starting point
  * @param Copy_u8_Length Line length
+ * @param Copy_u8_Thcickness Line thickness
+ * @param Copy_u8_Colour Colour
  * @return ErrorState_t 
  */
-static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour)
+static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
     u8 Local_u8_WrapAround = False;
@@ -1278,19 +1380,22 @@ static ErrorState_t enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart,
     
     if(Local_u8_Validation)
     {
-        Local_u8_WrapAround = Copy_u8_xStart + Copy_u8_Length > NOKIA5110_X_COORDINATE_MAX;
-
-        Local_u8_LineEnd = Copy_u8_xStart + Copy_u8_Length;
-        for(u8 Local_u8_x = Copy_u8_xStart; Local_u8_x <= Local_u8_LineEnd; Local_u8_x++)
+        for(u8 Local_u8_y = Copy_u8_Ystart; Local_u8_y < (Copy_u8_Ystart + Copy_u8_Thcickness); Local_u8_y++)
         {
-            if(Local_u8_WrapAround && (Local_u8_x > NOKIA5110_X_COORDINATE_MAX))
-            {
-                Local_u8_x = 0; //Starting again from the top
-                Local_u8_LineEnd -= (NOKIA5110_X_COORDINATE_MAX + 1); //Acquiring new stopping row
-            }
+            Local_u8_WrapAround = (Copy_u8_xStart + Copy_u8_Length) > NOKIA5110_X_COORDINATE_MAX;
 
-            enu_DrawPixel(Copy_u8_Ystart, Local_u8_x, Copy_u8_Colour);
-        }    
+            Local_u8_LineEnd = Copy_u8_xStart + Copy_u8_Length;
+            for(u8 Local_u8_x = Copy_u8_xStart; Local_u8_x <= Local_u8_LineEnd; Local_u8_x++)
+            {
+                if(Local_u8_WrapAround && (Local_u8_x > NOKIA5110_X_COORDINATE_MAX))
+                {
+                    Local_u8_x = 0; //Starting again from the top
+                    Local_u8_LineEnd -= (NOKIA5110_X_COORDINATE_MAX + 1); //Acquiring new stopping row
+                }
+
+                enu_DrawPixel(Local_u8_y, Local_u8_x, Copy_u8_Colour);
+            }    
+        }
 
         Local_u8_ErrorFlag = ES_OK;
     }

@@ -1,24 +1,19 @@
 #include "../mcal/sreg/sreg_interface.h"
 #include "../mcal/dio/dio_interface.h"
 #include "../hal/nokia5110/nokia5110_interface.h"
+
+#include "PWM_Oscilloscope/PWMScope_Interface.h"
 #include <util/delay.h>
 
 
 void main(void)
 {
 
-	u8 i = 0;
-	//initializaions
-	NOKIA5110_enu_Initialization();
+	//Initializaions
+	PWMScope_enu_Initialization();
 
-
-	NOKIA5110_enu_DrawPixel(24,5, NOKIA5110_BLACK_COLOUR);
-	NOKIA5110_enu_CopyPixelByCooridnates(24,5, 0,0);	
-	while(1)
-	{		
-
-	}
-
+	//Running the scope
+	PWMScope_enu_RunScope();
 
 	
 }

@@ -57,6 +57,30 @@ typedef struct
 #define NOKIA5110_SHIFT_VERTICAL       (0)
 #define NOKIA5110_SHIFT_HORIZONTAL     (1)
 
+//Ranges of X and Y Addresses
+#define NOKIA5110_X_MIN   (0)
+#define NOKIA5110_X_MAX   (83)
+
+#define NOKIA5110_Y_MIN   (0)
+#define NOKIA5110_Y_MAX   (5)
+
+//Ranges of X and Y coordiantes
+#define NOKIA5110_Y_COORDINATE_MIN   (0)
+#define NOKIA5110_Y_COORDINATE_MAX   (47)
+
+#define NOKIA5110_X_COORDINATE_MIN   (NOKIA5110_X_MIN)
+#define NOKIA5110_X_COORDINATE_MAX   (NOKIA5110_X_MAX)
+
+
+//LCD Width and Length
+#define NOKIA5110_LCD_LENGTH   (84)
+#define NOKIA5110_LCD_WIDTH    (48)
+
+//Chsracter Overlapping
+#define NOKIA5110_ENABLE_OVERLAP  (0) 
+#define NOKIA5110_DISABLE_OVERLAP (1) 
+
+
 
 
 
@@ -78,13 +102,16 @@ extern ErrorState_t NOKIA5110_enu_Reset();
 
 extern ErrorState_t NOKIA5110_enu_ClearScreen();
 
+extern ErrorState_t NOKIA5110_enu_FillScreen();
+
+
 
 
 //Graphical Library
 
 extern ErrorState_t NOKIA5110_enu_DrawPixel(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour);
 
-extern ErrorState_t NOKIA5110_enu_DrawCharacter(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour);
+extern ErrorState_t NOKIA5110_enu_DrawCharacter(u8 Copy_u8_ASCII, u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Colour, u8 Copy_u8_Overlap);
 
 extern ErrorState_t NOKIA5110_enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, u8 Copy_u8_Length, u8 Copy_u8_Width, u8 Copy_u8_Colour);
 
@@ -92,11 +119,11 @@ extern ErrorState_t NOKIA5110_enu_DrawNumber(f32 Copy_f32_Number, u8 Copy_u8_Yst
 
 extern ErrorState_t NOKIA5110_enu_DrawPattern();
 
-extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Colour);
+extern ErrorState_t NOKIA5110_enu_DrawLine(u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Yend, u8 Copy_u8_Xend, u8 Copy_u8_Thickness, u8 Copy_u8_Colour);
 
-extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Colour);
+extern ErrorState_t NOKIA5110_enu_DrawVerticalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Height, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour);
 
-extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Colour);
+extern ErrorState_t NOKIA5110_enu_DrawHorizontalLine(u8 Copy_u8_Ystart, u8 Copy_u8_xStart, u8 Copy_u8_Length, u8 Copy_u8_Thcickness, u8 Copy_u8_Colour);
 
 extern ErrorState_t NOKIA5110_enu_ShiftPixel(u8 Copy_u8_Y, u8 Copy_u8_X, s32 Copy_s32_ShiftMagnitude, u8 Copy_u8_Direction);
 
@@ -104,6 +131,7 @@ extern ErrorState_t NOKIA5110_enu_CopyPixelByShifting(u8 Copy_u8_Y, u8 Copy_u8_X
 
 extern ErrorState_t NOKIA5110_enu_CopyPixelByCooridnates(u8 Copy_u8_Yoriginal, u8 Copy_u8_Xoriginal, u8 Copy_u8_Ycopied, u8 Copy_u8_Xcopied);
 
+extern ErrorState_t NOKIA5110_enu_DrawString(const u8* Copy_pu8_StringArray, u8 Copy_u8_Ystart, u8 Copy_u8_Xstart, u8 Copy_u8_Colour);
 
 
 
