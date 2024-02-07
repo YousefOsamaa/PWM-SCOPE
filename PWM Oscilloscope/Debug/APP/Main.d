@@ -3,7 +3,7 @@ APP/Main.d APP/Main.o: ../APP/Main.c ../APP/../mcal/sreg/sreg_interface.h \
  ../APP/../mcal/dio/../../LIB/ErrorStates.h \
  ../APP/../hal/nokia5110/nokia5110_interface.h \
  ../APP/../hal/nokia5110/../../LIB/ErrorStates.h \
- ../APP/../hal/nokia5110/../../LIB/STD.h \
+ ../APP/../hal/nokia5110/../../LIB/STD.h ../APP/../LIB/STD.h \
  ../APP/PWM_Oscilloscope/PWMScope_Interface.h \
  ../APP/PWM_Oscilloscope/../../LIB/ErrorStates.h \
  ../APP/PWM_Oscilloscope/../../LIB/STD.h \
@@ -32,6 +32,8 @@ APP/Main.d APP/Main.o: ../APP/Main.c ../APP/../mcal/sreg/sreg_interface.h \
 ../APP/../hal/nokia5110/../../LIB/ErrorStates.h:
 
 ../APP/../hal/nokia5110/../../LIB/STD.h:
+
+../APP/../LIB/STD.h:
 
 ../APP/PWM_Oscilloscope/PWMScope_Interface.h:
 

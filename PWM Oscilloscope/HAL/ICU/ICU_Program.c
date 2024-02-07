@@ -14,12 +14,10 @@
 #include "ICU_Private.h"
 
 static u8 LOC_u8_State = ICU_IDLE; //State by default IDLE 
-static u32 LOC_u32_PeriodCounts; //Variable to store the  period counts in it
-static u32 LOC_u32_TonCounts; //Variable to store Ton counts in it
-static u32 LOC_au32_NumberOfOverflowsArray[3];  //To sotre the number of overflows performed by ICU_TIMER_USED (Total, Falling Edge, Second Rising Edge)
+static u64 LOC_u64_PeriodCounts; //Variable to store the  period counts in it
+static u64 LOC_u64_TonCounts; //Variable to store Ton counts in it
+static u64 LOC_au64_NumberOfOverflowsArray[3];  //To sotre the number of overflows performed by ICU_TIMER_USED (Total, Falling Edge, Second Rising Edge)
 static u16 LOC_u16_Timer_PS;
-static u8 LOC_u8_NewReading = False;
-
 
 extern ErrorState_t ICU_enu_Initialization()
 {
@@ -28,9 +26,9 @@ extern ErrorState_t ICU_enu_Initialization()
     //Initialize Timer peripheral: Timer1, Normal, PS 1024, and  Interrupt Mode for overflow and input capture
     Timer1_enu_Initialization();
     Timer1_enu_DisableInterrupt(TIMER1_CAPTURE_EVENT_ISR);
+    Timer1_enu_DisableInterrupt(TIMER1_OVERFLOW_ISR);
     Timer1_enu_SetCallBackFunction(TIMER1_CAPTURE_EVENT_ISR, vid_CapturingFunction, NULL);
     Timer1_enu_SetCallBackFunction(TIMER1_OVERFLOW_ISR, vid_IncrementOverFlowCounter, NULL);
-    Timer1_enu_DisableInterrupt(TIMER1_OVERFLOW_ISR);
 
 
     //Initialize ICU module
@@ -77,33 +75,31 @@ extern ErrorState_t ICU_enu_StartCapture()
 extern ErrorState_t ICU_enu_CalculateParameters(f32* Copy_pf32_SignalParametersArray)
 {
     u8 Local_u8_ErrorFlag = ES_NOK;
-    f32 Local_f32_TimerFrequency = 16000000.0/LOC_u16_Timer_PS; 
+    u32 Local_u32_TimerFrequency = 16000000UL/LOC_u16_Timer_PS; 
     
     if(LOC_u8_State == ICU_IDLE)
     {
 
-        LOC_u32_PeriodCounts += 65536ULL*LOC_au32_NumberOfOverflowsArray[2]; //Total Number of Period Counts
+        LOC_u64_PeriodCounts += 65536*LOC_au64_NumberOfOverflowsArray[2]; //Total Number of Period Counts
 
-        LOC_u32_TonCounts += 65536ULL*LOC_au32_NumberOfOverflowsArray[1]; //Total Number of Duty Counts
+        LOC_u64_TonCounts += 65536*LOC_au64_NumberOfOverflowsArray[1]; //Total Number of Duty Counts
 
-        //Calculating Frequency in KHz
-        if(LOC_u32_PeriodCounts != 0)
+        //Calculating Frequency in Hz and Time in ms
+        if(LOC_u64_PeriodCounts != 0)
         {
-            Copy_pf32_SignalParametersArray[0] = (Local_f32_TimerFrequency/(LOC_u32_PeriodCounts*1000UL));
-        }
-        else
-        {
-            Copy_pf32_SignalParametersArray[0] = 0; //dc
+            Copy_pf32_SignalParametersArray[0] = ((f32)Local_u32_TimerFrequency/LOC_u64_PeriodCounts);
+            
         }
 
-        if(LOC_u32_PeriodCounts != 0)
+        //Calculating Duty Ratio in %
+        if(LOC_u64_PeriodCounts != 0)
         {
-            //Calculating Duty Ratio in %
-            Copy_pf32_SignalParametersArray[1] = ((f32)LOC_u32_TonCounts*100UL)/(LOC_u32_PeriodCounts);
-        }   
-        else
+            Copy_pf32_SignalParametersArray[1] = (LOC_u64_TonCounts*100.0)/(LOC_u64_PeriodCounts);
+        }
+
+        //Period in ms
         {
-            Copy_pf32_SignalParametersArray[1] = 100; 
+            Copy_pf32_SignalParametersArray[2] = (LOC_u64_PeriodCounts*1000/(f32)Local_u32_TimerFrequency);
         }
     
     }
@@ -140,7 +136,7 @@ void vid_CapturingFunction(void* Copy_pvid_FunctionParameters)
             
             Timer1_enu_SetTCNT1(0);
 
-            LOC_au32_NumberOfOverflowsArray[0] = 0; //Resetting Overflow Counter
+            LOC_au64_NumberOfOverflowsArray[0] = 0; //Resetting Overflow Counter
 
             Timer1_enu_SetInputCaptureEdge(TIMER1_ICU_FALLING_EDGE);            
             
@@ -153,9 +149,9 @@ void vid_CapturingFunction(void* Copy_pvid_FunctionParameters)
         case ICU_FALLING_EDGE:
         {
             
-            Timer1_enu_GetICR1(&LOC_u32_TonCounts);
+            Timer1_enu_GetICR1(&LOC_u64_TonCounts);
 
-            LOC_au32_NumberOfOverflowsArray[1] = LOC_au32_NumberOfOverflowsArray[0];
+            LOC_au64_NumberOfOverflowsArray[1] = LOC_au64_NumberOfOverflowsArray[0];
             
             Timer1_enu_SetInputCaptureEdge(TIMER1_ICU_RISING_EDGE);
             
@@ -169,9 +165,9 @@ void vid_CapturingFunction(void* Copy_pvid_FunctionParameters)
         
         case ICU_SECOND_RISING_EDGE:
         {
-            Timer1_enu_GetICR1(&LOC_u32_PeriodCounts);
+            Timer1_enu_GetICR1(&LOC_u64_PeriodCounts);
             
-            LOC_au32_NumberOfOverflowsArray[2] = LOC_au32_NumberOfOverflowsArray[0];
+            LOC_au64_NumberOfOverflowsArray[2] = LOC_au64_NumberOfOverflowsArray[0];
 
             #if ICU_MODE == ICU_SNGLE_CAPTURE_MODE
             Timer1_enu_DisableInterrupt(TIMER1_CAPTURE_EVENT_ISR);
@@ -190,12 +186,6 @@ void vid_CapturingFunction(void* Copy_pvid_FunctionParameters)
             break;
 
         }
-    
-        case ICU_IDLE:
-        {
-            //Redundant case    
-            break;
-        }
 
         default:
         {
@@ -209,6 +199,6 @@ void vid_CapturingFunction(void* Copy_pvid_FunctionParameters)
 void vid_IncrementOverFlowCounter()
 {
 
-    LOC_au32_NumberOfOverflowsArray[0]++;
+    LOC_au64_NumberOfOverflowsArray[0]++;
     
 }

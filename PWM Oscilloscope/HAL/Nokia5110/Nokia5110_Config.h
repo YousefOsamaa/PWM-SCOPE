@@ -18,7 +18,7 @@
 #define NOKIA5110_RES_PIN       (DIO_PIN_2)         //RESET Pin
 
 #define NOKIA5110_MAX_DIGITS     (10)
-#define NOKIA5110_FLOAT_POINTS   (3)
+#define NOKIA5110_FLOAT_POINTS   (2)
 
 //Font Size
 // #define NOKIA5110_CHARACTER_SIZE 

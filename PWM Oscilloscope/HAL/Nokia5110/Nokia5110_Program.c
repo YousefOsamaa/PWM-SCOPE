@@ -408,7 +408,7 @@ extern ErrorState_t NOKIA5110_enu_DrawFillRectangle(u8 Copy_u8_Y, u8 Copy_u8_X, 
 {
     u8 Local_u8_ErrorFlag =ES_NOK;
 
-    Local_u8_ErrorFlag = enu_DrawRectangle(Copy_u8_Y, Copy_u8_X, Copy_u8_Length, Copy_u8_Width, Copy_u8_Colour);
+    Local_u8_ErrorFlag = enu_DrawFillRectangle(Copy_u8_Y, Copy_u8_X, Copy_u8_Length, Copy_u8_Width, Copy_u8_Colour);
 
     return Local_u8_ErrorFlag;
 }

@@ -1,7 +1,7 @@
 #include "../mcal/sreg/sreg_interface.h"
 #include "../mcal/dio/dio_interface.h"
 #include "../hal/nokia5110/nokia5110_interface.h"
-
+#include "../LIB/STD.h"
 #include "PWM_Oscilloscope/PWMScope_Interface.h"
 #include <util/delay.h>
 
@@ -9,11 +9,44 @@
 void main(void)
 {
 
-	//Initializaions
+	// //Initializaions
 	PWMScope_enu_Initialization();
 
-	//Running the scope
+	// //Running the scope
 	PWMScope_enu_RunScope();
+
+	// u32 local_au32_signalsparameters[2] = {0};
+	// u32 local_au32_Oldsignalsparameters[2] = {0};
+
+	// NOKIA5110_enu_Initialization();
+	// ICU_enu_Initialization();
+
+	// NOKIA5110_enu_DrawNumber(local_au32_signalsparameters[0], 0, 0, NOKIA5110_BLACK_COLOUR);
+	// NOKIA5110_enu_DrawNumber(local_au32_signalsparameters[1], 10, 0, NOKIA5110_BLACK_COLOUR);
+ 	
+	// SREG_vid_EnableBitI();
+	// //superloop
+ 	// while(1)
+ 	// {
+
+	// 	local_au32_Oldsignalsparameters[0] = local_au32_signalsparameters[0];
+	// 	local_au32_Oldsignalsparameters[1] = local_au32_signalsparameters[1];
+		
+	// 	ICU_enu_StartCapture();
+		
+	// 	ICU_enu_CalculateParameters(local_au32_signalsparameters); //calculating parameters
+		
+	// 	u8 Local_u8_Change = (local_au32_signalsparameters[0] != local_au32_Oldsignalsparameters[0]) || (local_au32_signalsparameters[1] != local_au32_Oldsignalsparameters[1]);
+		
+	// 	if(Local_u8_Change)
+	// 	{	
+	// 		NOKIA5110_enu_DrawNumber((local_au32_signalsparameters[0]/1000.0), 0, 0, NOKIA5110_BLACK_COLOUR);
+	// 		NOKIA5110_enu_DrawNumber(local_au32_signalsparameters[1], 10, 0, NOKIA5110_BLACK_COLOUR);
+	// 	}
+		
+ 	// }
+
+
 
 	
 }
